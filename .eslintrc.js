@@ -15,5 +15,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    "linebreak-style": 0,
+    "no-param-reassign": ["error", { "props": false}]
   },
 };
