@@ -1,9 +1,10 @@
 const log = require('./module');
 
-log('hello world');
 
-const logg = () => {
-  console.log('logger');
+log('hallo');
+
+const logger = () => {
+    console.log('logger');
 };
 
-logg();
+logger();
