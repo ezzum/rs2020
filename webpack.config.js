@@ -39,10 +39,10 @@ module.exports = (env, options) => {
             'css-loader',
           ],
         },
-        // {
-        //   test: /\.html$/i,
-        //   loader: 'html-loader',
-        // },
+        {
+          test: /\.html$/i,
+          loader: 'html-loader',
+        },
         // {
         //   test: /\.(png|svg|jpe?g|gif)$/,
         //   use: [
@@ -56,9 +56,9 @@ module.exports = (env, options) => {
 
     plugins: [
       new CleanWebpackPlugin(),
-      // new HtmlWebpackPlugin({
-      //   template: 'index.html',
-      // }),
+      new HtmlWebpackPlugin({
+        template: 'index.html',
+      }),
       new MiniCssExtractPlugin({
         filename: 'style.css',
       }),
