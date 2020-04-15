@@ -22,6 +22,6 @@ buttMenu.click();
 const menu = new Menu(cards[0], header.selector, 'nav_bar');
 menu.render();
 
-const categories = new Categories(main.selector, `${main.selector}-category`, cards);
+const categories = new Categories(main.selector, 'category', cards);
 categories.renderCat();
 categories.click();

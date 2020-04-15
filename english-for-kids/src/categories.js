@@ -27,9 +27,7 @@ class Categories {
 
   click() {
     document.querySelector(`.${this.target}`).addEventListener('click', (event) => {
-      console.log(event.target);
       const id = parseInt(event.target.id, 10);
-
       if (event.target.className === 'rotate') {
         this.rotate(event);
         return;
@@ -38,11 +36,14 @@ class Categories {
       if (event.target.className === this.target) {
         return;
       }
-      document.querySelectorAll(`.${this.selector}`).forEach((el) => {
-        el.remove();
-      });
 
-      this.renderCard(id);
+      if (event.target.className === this.selector) {
+        document.querySelectorAll(`.${this.selector}`).forEach((el) => {
+          el.remove();
+        });
+
+        this.renderCard(id);
+      }
     });
   }
 
@@ -50,6 +51,7 @@ class Categories {
     for (let i = 0; i < this.array[id].length; i += 1) {
       const elem = document.createElement('div');
       elem.className = `${this.selector} card`;
+      elem.id = i;
       document.querySelector(`.${this.target}`).append(elem);
 
       const front = document.createElement('div');
@@ -88,7 +90,10 @@ class Categories {
   }
 
   rotate(event) {
-    event.target.parentElement.style.transform = 'rotateY(180deg)';
+    document.querySelectorAll(`.${this.selector}`)[event.target.parentElement.id].style.transform = 'rotateY(180deg)';
+    document.querySelectorAll(`.${this.selector}`)[event.target.parentElement.id].addEventListener('mouseleave', () => {
+      document.querySelectorAll(`.${this.selector}`)[event.target.parentElement.id].style.transform = 'rotateY(0deg)';
+    });
   }
 }
 
