@@ -87,13 +87,13 @@ body {
     transform: rotateY(0deg);
     transition: transform 1s;
 }
-.front {
+.front-card {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
 }
-.back {
+.back-card {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -108,7 +108,7 @@ body {
     border-radius: 10px 10px 0 0;
     border: 0;
 }
-.descrip {
+.descrip-card {
     text-align: center;
     line-height: 55px;
 }

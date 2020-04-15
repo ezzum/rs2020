@@ -33,17 +33,15 @@ class Categories {
         return;
       }
 
-      if (event.target.className === this.target) {
+      if (event.target.className === this.target || event.target.className.includes('card')) {
         return;
       }
 
-      if (event.target.className === this.selector) {
-        document.querySelectorAll(`.${this.selector}`).forEach((el) => {
-          el.remove();
-        });
+      document.querySelectorAll(`.${this.selector}`).forEach((el) => {
+        el.remove();
+      });
 
-        this.renderCard(id);
-      }
+      this.renderCard(id);
     });
   }
 
@@ -55,32 +53,32 @@ class Categories {
       document.querySelector(`.${this.target}`).append(elem);
 
       const front = document.createElement('div');
-      front.className = 'front';
+      front.className = 'front-card';
       document.querySelectorAll(`.${this.selector}`)[i].append(front);
 
       const img = document.createElement('img');
       img.src = `./src/${this.array[id][i].image}`;
       img.className = 'img-card';
-      document.querySelectorAll('.front')[i].append(img);
+      document.querySelectorAll('.front-card')[i].append(img);
 
       const descrip = document.createElement('div');
-      descrip.className = 'descrip';
+      descrip.className = 'descrip-card';
       descrip.innerHTML = `${this.array[id][i].word}`;
-      document.querySelectorAll('.front')[i].append(descrip);
+      document.querySelectorAll('.front-card')[i].append(descrip);
 
       const back = document.createElement('div');
-      back.className = 'back';
+      back.className = 'back-card';
       document.querySelectorAll(`.${this.selector}`)[i].append(back);
 
       const imgBack = document.createElement('img');
       imgBack.src = `./src/${this.array[id][i].image}`;
       imgBack.className = 'img-card';
-      document.querySelectorAll('.back')[i].append(imgBack);
+      document.querySelectorAll('.back-card')[i].append(imgBack);
 
       const descripBack = document.createElement('div');
-      descripBack.className = 'descrip';
+      descripBack.className = 'descrip-card';
       descripBack.innerHTML = `${this.array[id][i].translation}`;
-      document.querySelectorAll('.back')[i].append(descripBack);
+      document.querySelectorAll('.back-card')[i].append(descripBack);
 
       const rotate = document.createElement('img');
       rotate.className = 'rotate';
