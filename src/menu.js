@@ -1,0 +1,24 @@
+class Menu {
+  constructor(array, target, selector) {
+    this.target = target;
+    this.array = array;
+    this.selector = selector;
+  }
+
+  render() {
+    const menu = document.createElement('ul');
+    menu.className = this.selector;
+    menu.style.left = '-340px';
+    document.querySelector(`.${this.target}`).append(menu);
+
+    for (let i = 0; i < this.array.length; i += 1) {
+      const list = document.createElement('a');
+      list.className = i === 0 ? `${menu.className}-item active` : `${menu.className}-item`;
+      list.innerHTML = this.array[i];
+      list.href = '#';
+      document.querySelector(`.${menu.className}`).append(list);
+    }
+  }
+}
+
+export default Menu;
