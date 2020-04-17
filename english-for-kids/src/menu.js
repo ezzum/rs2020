@@ -19,6 +19,11 @@ class Menu {
       list.id = i;
       document.querySelector(`.${menu.className}`).append(list);
     }
+
+    const back = document.createElement('div');
+    back.className = 'menu-back';
+    back.style.display = 'none';
+    document.querySelector(`.${this.target}`).append(back);
   }
 }
 

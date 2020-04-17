@@ -13,8 +13,10 @@ class Action {
     document.querySelector('.butt_menu').addEventListener(this.click, () => {
       const trans = document.querySelector('.butt_menu').style.transform;
       const menuLeft = document.querySelector('.nav_bar').style.left;
+      const menuBack = document.querySelector('.menu-back').style.display;
       document.querySelector('.butt_menu').style.transform = trans === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)';
       document.querySelector('.nav_bar').style.left = menuLeft === '0px' ? '-400px' : '0px';
+      document.querySelector('.menu-back').style.display = menuBack === 'none' ? 'block' : 'none';
     });
   }
 
@@ -31,6 +33,11 @@ class Action {
 
         const cardPage = new CardPage('main-container', 'category', this.array, event.target.id);
         cardPage.renderCard();
+
+        document.querySelectorAll('.nav_bar-item').forEach((el) => {
+          el.classList.remove('active');
+        });
+        document.querySelectorAll('.nav_bar-item')[event.target.id].classList.add('active');
 
         this.currentCat = event.target.id;
 
@@ -56,6 +63,7 @@ class Action {
       if (event.target.className === 'nav_bar') return;
 
       document.querySelector('.nav_bar').style.left = '-400px';
+      document.querySelector('.menu-back').style.display = 'none';
       document.querySelectorAll('.nav_bar-item').forEach((el) => {
         el.classList.remove('active');
       });
@@ -78,6 +86,11 @@ class Action {
       cardPage.renderCard();
 
       this.currentCat = event.target.id;
+    });
+
+    document.querySelector('.menu-back').addEventListener(this.click, () => {
+      document.querySelector('.nav_bar').style.left = '-400px';
+      document.querySelector('.menu-back').style.display = 'none';
     });
   }
 }

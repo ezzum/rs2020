@@ -32,6 +32,12 @@ body {
 .active {
     text-decoration: underline;
 }
+.menu-back {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
 .butt_menu {
     top: 50px;
     width: 35px;
