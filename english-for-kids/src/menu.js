@@ -8,7 +8,7 @@ class Menu {
   render() {
     const menu = document.createElement('ul');
     menu.className = this.selector;
-    menu.style.left = '-340px';
+    menu.style.left = '-400px';
     document.querySelector(`.${this.target}`).append(menu);
 
     for (let i = 0; i < this.array.length; i += 1) {

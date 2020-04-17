@@ -19,6 +19,5 @@ categories.renderCat();
 
 const action = new Action(cards);
 action.buttMenuClick();
-action.categoryClick();
+action.elementClick();
 action.menuClick();
-action.rotateCard();

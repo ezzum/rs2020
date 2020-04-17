@@ -13,29 +13,37 @@ class Action {
       const trans = document.querySelector('.butt_menu').style.transform;
       const menuLeft = document.querySelector('.nav_bar').style.left;
       document.querySelector('.butt_menu').style.transform = trans === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)';
-      document.querySelector('.nav_bar').style.left = menuLeft === '0px' ? '-340px' : '0px';
+      document.querySelector('.nav_bar').style.left = menuLeft === '0px' ? '-400px' : '0px';
     });
   }
 
-  categoryClick() {
+  elementClick() {
     document.querySelector('.main-container').addEventListener(this.click, (event) => {
       if (event.target.className === 'main-container') return;
-      if (event.target.className.includes('card')) return;
 
-      document.querySelectorAll('.category').forEach((el) => {
-        el.remove();
-      });
+      if (document.querySelector('.main-container').className === 'main-container') {
+        document.querySelectorAll('.category').forEach((el) => {
+          el.remove();
+        });
 
-      document.querySelector('.main-container').classList.add('cards');
+        document.querySelector('.main-container').classList.add('cards');
 
-      const cardPage = new CardPage('main-container', 'category', this.array, event.target.id);
-      cardPage.renderCard();
+        const cardPage = new CardPage('main-container', 'category', this.array, event.target.id);
+        cardPage.renderCard();
+      }
+
+      if (event.target.className === 'rotate-card') {
+        document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(180deg)';
+        document.querySelectorAll('.category')[event.target.parentElement.id].addEventListener('mouseleave', () => {
+          document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(0deg)';
+        });
+      }
     });
   }
 
   menuClick() {
     document.querySelector('.nav_bar').addEventListener(this.click, (event) => {
-      document.querySelector('.nav_bar').style.left = '-340px';
+      document.querySelector('.nav_bar').style.left = '-400px';
       document.querySelectorAll('.nav_bar-item').forEach((el) => {
         el.classList.remove('active');
       });
@@ -61,13 +69,6 @@ class Action {
     });
   }
 
-  // rotateCard() {
-  //   document.querySelector('.rotate-card').addEventListener(this.click, (event) => {
-  //     document.querySelectorAll('.rotate-card')[event.target.parentElement.id].style.transform = 'rotateY(180deg)';
-
-  //   });
-  // }
-
   audio() {
     document.querySelector(`.${this.target}`).addEventListener('click', (event) => {
       if (event.target.className.includes('card')) {
@@ -75,13 +76,6 @@ class Action {
         audio.src = `./src/${this.array[this.id][event.target.parentElement.id].audioSrc}`;
         audio.play();
       }
-    });
-  }
-
-  rotate(event) {
-    document.querySelectorAll(`.${this.selector}`)[event.target.parentElement.id].style.transform = 'rotateY(180deg)';
-    document.querySelectorAll(`.${this.selector}`)[event.target.parentElement.id].addEventListener('mouseleave', () => {
-      document.querySelectorAll(`.${this.selector}`)[event.target.parentElement.id].style.transform = 'rotateY(0deg)';
     });
   }
 }
