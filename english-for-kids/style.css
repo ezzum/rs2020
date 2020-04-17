@@ -29,6 +29,9 @@ body {
     line-height: 65px;
     color: #fff;
 }
+.active {
+    text-decoration: underline;
+}
 .butt_menu {
     top: 50px;
     width: 35px;
@@ -43,7 +46,8 @@ body {
     margin-top: 6px;
     border-radius: 2px;
 }
-.main-container {
+.main-container,
+.main-container-card {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -85,7 +89,7 @@ body {
     display: inline;
     transform-style: preserve-3d;
     transform: rotateY(0deg);
-    transition: transform 1s;
+    transition: transform 1s, box-shadow 0.5s;
 }
 .front-card {
     position: absolute;
@@ -112,7 +116,7 @@ body {
     text-align: center;
     line-height: 55px;
 }
-.rotate {
+.rotate-card {
     width: 40px;
     height: 33px;
     position: absolute;

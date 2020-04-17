@@ -1,27 +1,24 @@
 import cards from './card';
 import AppContainer from './app-container';
-import Header from './header';
 import ButtMenu from './butt_menu';
-import Main from './main';
 import Menu from './menu';
 import Categories from './categories';
+import Action from './action';
 
 const appContainer = new AppContainer('body', 'container');
 appContainer.render();
 
-const header = new Header(appContainer.selector, `header-${appContainer.selector}`);
-header.render();
-
-const main = new Main(appContainer.selector, `main-${appContainer.selector}`);
-main.render();
-
-const buttMenu = new ButtMenu(header.selector, 'butt_menu');
+const buttMenu = new ButtMenu(appContainer.head.className, 'butt_menu');
 buttMenu.render();
-buttMenu.click();
 
-const menu = new Menu(cards[0], header.selector, 'nav_bar');
+const menu = new Menu(cards, appContainer.head.className, 'nav_bar');
 menu.render();
 
-const categories = new Categories(main.selector, 'category', cards);
+const categories = new Categories(appContainer.main.className, 'category', cards);
 categories.renderCat();
-categories.click();
+
+const action = new Action(cards);
+action.buttMenuClick();
+action.categoryClick();
+action.menuClick();
+action.rotateCard();

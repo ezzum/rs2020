@@ -14,8 +14,9 @@ class Menu {
     for (let i = 0; i < this.array.length; i += 1) {
       const list = document.createElement('a');
       list.className = i === 0 ? `${menu.className}-item active` : `${menu.className}-item`;
-      list.innerHTML = this.array[i];
+      list.innerHTML = this.array[0][i];
       list.href = '#';
+      list.id = i;
       document.querySelector(`.${menu.className}`).append(list);
     }
   }

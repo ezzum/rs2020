@@ -7,21 +7,13 @@ class ButtMenu {
   render() {
     const butt = document.createElement('div');
     butt.className = this.selector;
+    butt.style.transform = 'rotate(0deg)';
     document.querySelector(`.${this.target}`).append(butt);
 
     for (let i = 0; i < 3; i += 1) {
       const elem = document.createElement('div');
       document.querySelector(`.${this.selector}`).append(elem);
     }
-  }
-
-  click() {
-    document.querySelector(`.${this.selector}`).addEventListener('click', () => {
-      const { left } = document.querySelector('.nav_bar').style;
-      const rotate = document.querySelector(`.${this.selector}`).style.transform;
-      document.querySelector('.nav_bar').style.left = left === '-340px' ? '0px' : '-340px';
-      document.querySelector(`.${this.selector}`).style.transform = rotate === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)';
-    });
   }
 }
 
