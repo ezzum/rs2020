@@ -43,7 +43,7 @@ class Action {
           document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(0deg)';
         });
       }
-      if (event.target.className.includes('card')) {
+      if (event.target.className.endsWith('card')) {
         const audio = new Audio();
         audio.src = `./src/${this.array[this.currentCat][event.target.parentElement.id].audioSrc}`;
         audio.play();
@@ -53,13 +53,13 @@ class Action {
 
   menuClick() {
     document.querySelector('.nav_bar').addEventListener(this.click, (event) => {
+      if (event.target.className === 'nav_bar') return;
+
       document.querySelector('.nav_bar').style.left = '-400px';
       document.querySelectorAll('.nav_bar-item').forEach((el) => {
         el.classList.remove('active');
       });
       document.querySelectorAll('.nav_bar-item')[event.target.id].classList.add('active');
-
-      if (event.target.className === 'nav_bar') return;
 
       document.querySelectorAll('.category').forEach((el) => {
         el.remove();
@@ -78,16 +78,6 @@ class Action {
       cardPage.renderCard();
 
       this.currentCat = event.target.id;
-    });
-  }
-
-  audio() {
-    document.querySelector(`.${this.target}`).addEventListener('click', (event) => {
-      if (event.target.className.includes('card')) {
-        const audio = new Audio();
-        audio.src = `./src/${this.array[this.id][event.target.parentElement.id].audioSrc}`;
-        audio.play();
-      }
     });
   }
 }
