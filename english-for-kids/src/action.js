@@ -7,6 +7,7 @@ class Action {
     this.array = array;
     this.click = 'click';
     this.currentCat = null;
+    this.menuLeft = '';
   }
 
   buttMenuClick() {
@@ -15,20 +16,11 @@ class Action {
       const menuLeft = document.querySelector('.nav_bar').style.left;
       const menuBack = document.querySelector('.menu-back').style.display;
       // document.querySelector('.butt_menu').style.transform = trans === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)';
+      this.transformButtMenu();
+
       document.querySelector('.nav_bar').style.left = menuLeft === '0px' ? '-400px' : '0px';
       document.querySelector('.menu-back').style.display = menuBack === 'none' ? 'block' : 'none';
 
-      if (menuLeft === '-400px') {
-        document.querySelector('.line1').style.opacity = '0';
-        document.querySelector('.line0').style.transform = 'rotate(45deg)';
-        document.querySelector('.line0').style.top = '-4px';
-        document.querySelector('.line2').style.transform = 'rotate(-45deg)';
-      } else {
-        document.querySelector('.line1').style.opacity = '1';
-        document.querySelector('.line0').style.transform = 'rotate(0deg)';
-        document.querySelector('.line0').style.top = '0px';
-        document.querySelector('.line2').style.transform = 'rotate(0deg)';
-      }
     });
   }
 
@@ -74,6 +66,8 @@ class Action {
     document.querySelector('.nav_bar').addEventListener(this.click, (event) => {
       if (event.target.className === 'nav_bar') return;
 
+      this.transformButtMenu();
+
       document.querySelector('.nav_bar').style.left = '-400px';
       document.querySelector('.menu-back').style.display = 'none';
       document.querySelectorAll('.nav_bar-item').forEach((el) => {
@@ -96,7 +90,6 @@ class Action {
 
       const cardPage = new CardPage('main-container', 'category', this.array, event.target.id);
       cardPage.renderCard();
-
       this.currentCat = event.target.id;
     });
 
@@ -104,6 +97,22 @@ class Action {
       document.querySelector('.nav_bar').style.left = '-400px';
       document.querySelector('.menu-back').style.display = 'none';
     });
+  }
+
+  transformButtMenu() {
+    this.menuLeft = document.querySelector('.nav_bar').style.left;
+
+    if (this.menuLeft === '-400px') {
+      document.querySelector('.line1').style.opacity = '0';
+      document.querySelector('.line0').style.transform = 'rotate(45deg)';
+      document.querySelector('.line0').style.top = '-4px';
+      document.querySelector('.line2').style.transform = 'rotate(-45deg)';
+    } else {
+      document.querySelector('.line1').style.opacity = '1';
+      document.querySelector('.line0').style.transform = 'rotate(0deg)';
+      document.querySelector('.line0').style.top = '0px';
+      document.querySelector('.line2').style.transform = 'rotate(0deg)';
+    }
   }
 }
 
