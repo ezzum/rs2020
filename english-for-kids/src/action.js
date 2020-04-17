@@ -94,6 +94,7 @@ class Action {
     });
 
     document.querySelector('.menu-back').addEventListener(this.click, () => {
+      this.transformButtMenu();
       document.querySelector('.nav_bar').style.left = '-400px';
       document.querySelector('.menu-back').style.display = 'none';
     });
