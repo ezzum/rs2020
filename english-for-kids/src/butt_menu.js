@@ -12,6 +12,7 @@ class ButtMenu {
 
     for (let i = 0; i < 3; i += 1) {
       const elem = document.createElement('div');
+      elem.className = `line${i}`;
       document.querySelector(`.${this.selector}`).append(elem);
     }
   }

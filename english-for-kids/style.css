@@ -46,6 +46,12 @@ body {
     z-index: 5;
     transition: transform 0.8s;
 }
+.line0,
+.line2 {
+    transform-origin: left;
+    transition: transform 0.5s;
+    position: relative;
+}
 .butt_menu div {
     height: 4px;
     background-color: #777777;

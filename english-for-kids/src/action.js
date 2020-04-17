@@ -11,12 +11,24 @@ class Action {
 
   buttMenuClick() {
     document.querySelector('.butt_menu').addEventListener(this.click, () => {
-      const trans = document.querySelector('.butt_menu').style.transform;
+      // const trans = document.querySelector('.butt_menu').style.transform;
       const menuLeft = document.querySelector('.nav_bar').style.left;
       const menuBack = document.querySelector('.menu-back').style.display;
-      document.querySelector('.butt_menu').style.transform = trans === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)';
+      // document.querySelector('.butt_menu').style.transform = trans === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)';
       document.querySelector('.nav_bar').style.left = menuLeft === '0px' ? '-400px' : '0px';
       document.querySelector('.menu-back').style.display = menuBack === 'none' ? 'block' : 'none';
+
+      if (menuLeft === '-400px') {
+        document.querySelector('.line1').style.opacity = '0';
+        document.querySelector('.line0').style.transform = 'rotate(45deg)';
+        document.querySelector('.line0').style.top = '-4px';
+        document.querySelector('.line2').style.transform = 'rotate(-45deg)';
+      } else {
+        document.querySelector('.line1').style.opacity = '1';
+        document.querySelector('.line0').style.transform = 'rotate(0deg)';
+        document.querySelector('.line0').style.top = '0px';
+        document.querySelector('.line2').style.transform = 'rotate(0deg)';
+      }
     });
   }
 
