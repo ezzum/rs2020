@@ -6,6 +6,7 @@ class Action {
   constructor(array) {
     this.array = array;
     this.click = 'click';
+    this.currentCat = null;
   }
 
   buttMenuClick() {
@@ -30,13 +31,22 @@ class Action {
 
         const cardPage = new CardPage('main-container', 'category', this.array, event.target.id);
         cardPage.renderCard();
+
+        this.currentCat = event.target.id;
+
+        return;
       }
 
-      if (event.target.className === 'rotate-card') {
+      if (event.target.className === 'rotate') {
         document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(180deg)';
         document.querySelectorAll('.category')[event.target.parentElement.id].addEventListener('mouseleave', () => {
           document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(0deg)';
         });
+      }
+      if (event.target.className.includes('card')) {
+        const audio = new Audio();
+        audio.src = `./src/${this.array[this.currentCat][event.target.parentElement.id].audioSrc}`;
+        audio.play();
       }
     });
   }
@@ -66,6 +76,8 @@ class Action {
 
       const cardPage = new CardPage('main-container', 'category', this.array, event.target.id);
       cardPage.renderCard();
+
+      this.currentCat = event.target.id;
     });
   }
 

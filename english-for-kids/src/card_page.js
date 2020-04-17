@@ -44,7 +44,7 @@ class CardPage {
       document.querySelectorAll('.back-card')[i].append(descripBack);
 
       const rotate = document.createElement('img');
-      rotate.className = 'rotate-card';
+      rotate.className = 'rotate';
       rotate.src = './src/img/rotate.png';
       document.querySelectorAll(`.${this.selector}`)[i].append(rotate);
     }
