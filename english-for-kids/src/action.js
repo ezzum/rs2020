@@ -8,6 +8,8 @@ class Action {
     this.click = 'click';
     this.currentCat = null;
     this.menuLeft = '';
+    this.shuffle = [];
+    this.currentCard = null;
   }
 
   buttMenuClick() {
@@ -53,10 +55,13 @@ class Action {
           document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(0deg)';
         });
       }
-      if (event.target.className.endsWith('card')) {
+      if (event.target.className.endsWith('card') && document.querySelector('.mode').innerHTML === 'TRAIN') {
         const audio = new Audio();
         audio.src = `./src/${this.array[this.currentCat][event.target.parentElement.id].audioSrc}`;
         audio.play();
+      }
+      if (document.querySelector('.mode').innerHTML === 'PLAY') {
+        this.startGame(event);
       }
     });
   }
@@ -78,9 +83,14 @@ class Action {
         el.remove();
       });
 
+      if (document.querySelector('.start')) {
+        document.querySelector('.start').remove();
+      }
+
       if (event.target.id === '0') {
         document.querySelector('.name-category').remove();
         document.querySelector('.main-container').classList.remove('cards');
+        document.querySelector('.main-container').id = 0;
         const categories = new Categories('main-container', 'category', cards);
         categories.renderCat();
         return;
@@ -123,13 +133,91 @@ class Action {
         document.querySelector('.mode').innerHTML = 'PLAY';
         document.querySelector('.handle').style.left = '-80px';
         document.querySelector('.switch').className = 'switch play';
+        document.querySelectorAll('.category').forEach((el) => {
+          el.classList.add('cat-play');
+        });
+        document.querySelectorAll('.rotate').forEach((el) => {
+          el.classList.add('hide');
+        });
+        document.querySelectorAll('.descrip-card').forEach((el) => {
+          el.classList.add('hide');
+        });
+        document.querySelectorAll('.img-card').forEach((el) => {
+          el.classList.add('img-play');
+        });
+        if (document.querySelector('.name-category').innerHTML !== 'Main Page') {
+          const start = document.createElement('div');
+          start.className = 'start';
+          start.innerHTML = 'Start Game';
+          document.querySelector('.main-container').append(start);
+        }
       } else {
         document.querySelector('.mode').style.left = '0px';
         document.querySelector('.mode').innerHTML = 'TRAIN';
         document.querySelector('.handle').style.left = '0px';
         document.querySelector('.switch').className = 'switch train';
+        document.querySelectorAll('.category').forEach((el) => {
+          el.classList.remove('cat-play');
+        });
+        document.querySelectorAll('.rotate').forEach((el) => {
+          el.classList.remove('hide');
+        });
+        document.querySelectorAll('.descrip-card').forEach((el) => {
+          el.classList.remove('hide');
+        });
+        document.querySelectorAll('.img-card').forEach((el) => {
+          el.classList.remove('img-play');
+        });
+        if (document.querySelector('.name-category').innerHTML !== 'Main Page') {
+          document.querySelector('.start').remove();
+        }
       }
     });
+  }
+
+  startGame(event) {
+    if (event.target.className === 'start') {
+      document.querySelector('.start').classList.add('start-push');
+      document.querySelector('.start').innerHTML = 'Repeat';
+
+      const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+      const arr = [0, 1, 2, 3, 4, 5, 6, 7];
+      this.shuffle = shuffle(arr);
+    }
+
+    if (event.target.style.opacity === '0.5') return;
+
+
+    if (event.target.className.includes('card') && document.querySelector('.start').innerHTML === 'Repeat' && event.target.style.opacity === '1') {
+      if (parseInt(event.target.parentElement.id, 10) === this.currentCard) {
+        const starWin = document.createElement('img');
+        starWin.src = './src/img/star-win.svg';
+        document.querySelector('.rating').prepend(starWin);
+        const audio = new Audio();
+        audio.src = './src/audio/correct.mp3';
+        audio.play();
+        event.target.style.opacity = '0.5';
+        event.target.style.cursor = 'default';
+      } else {
+        const star = document.createElement('img');
+        star.src = './src/img/star.svg';
+        document.querySelector('.rating').prepend(star);
+        const audio = new Audio();
+        audio.src = './src/audio/error.mp3';
+        audio.play();
+        return;
+      }
+    }
+
+
+    if (document.querySelector('.start').innerHTML === 'Repeat') {
+      this.currentCard = this.shuffle.shift();
+      setTimeout(() => {
+        const audio = new Audio();
+        audio.src = `./src/${this.array[this.currentCat][this.currentCard].audioSrc}`;
+        audio.play();
+      }, 1000);
+    }
   }
 }
 

@@ -22,6 +22,7 @@ body {
     box-shadow: inset 0 2px 5px 0 #00000029, inset 0 2px 10px 0 #0000001f;
     cursor: pointer;
     display: flex;
+    transition: 0.5s;
 }
 .switch:hover {
     box-shadow: 0 2px 15px 0 #0000004b, 0 2px 15px 0 #00000049;
@@ -32,6 +33,7 @@ body {
 .play {
     background: linear-gradient(40deg,#ffd86f,#fc6262);
 }
+
 .mode {
     position: relative;
     margin: auto;
@@ -58,7 +60,7 @@ body {
     height: 20px;
     background: #f9f9f9;
     border-radius: 10px;
-    box-shadow: inset 0 1px rgba(0,0,0,.02);
+    box-shadow: inset 0 1px #00000005;
     background-image: linear-gradient(180deg,#eee,#fff);
 }
 .name-category {
@@ -129,11 +131,14 @@ body {
     height: 300px;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 2px 5px 0 #00000029, 0 2px 10px 0 #0000001f;
+    box-shadow: 0 2px 5px 3px #00000029, 0 2px 10px 3px #0000001f;
     transition: box-shadow 0.5s;
 }
+.cat-play {
+    background: linear-gradient(180deg,#ffd86f,#fc6262 40%,#fff 0,#fff);
+}
 .category:hover {
-    box-shadow: 0 2px 15px 0 #0000004b, 0 2px 15px 0 #00000049;
+    box-shadow: 0 2px 15px 3px #0000004b, 0 0px 0px 3px #00000049;
 }
 .img-category {
     width: 150px;
@@ -146,7 +151,11 @@ body {
 .category h2 {
     margin: auto;
 }
-
+.rating {
+    width: 90%;
+    height: 70px;
+    overflow: hidden;
+}
 .card {
     position: relative;
     width: 300px;
@@ -154,7 +163,6 @@ body {
     background-color: #fff;
     font-size: 25px;
     background: none;
-    display: inline;
     transform-style: preserve-3d;
     transform: rotateY(0deg);
     transition: transform 1s, box-shadow 0.5s;
@@ -179,6 +187,7 @@ body {
     margin: 0;
     border-radius: 10px 10px 0 0;
     border: 0;
+    transition: 0.5s;
 }
 .descrip-card {
     text-align: center;
@@ -195,4 +204,38 @@ body {
 }
 .rotate:hover {
     filter: brightness(1);
+}
+.hide {
+    display: none;
+}
+.img-play {
+    height: 100%;
+    border-radius: 10px;
+}
+.start {
+    margin: 30px auto;
+    width: 90%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background: linear-gradient(40deg,#ffd86f,#fc6262);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 3px #00000029, 0 2px 10px 3px #0000001f;
+    transition: 0.5s;
+}
+.start:hover {
+    box-shadow: 0 2px 15px 3px #0000004b;
+}
+.start-push {
+    margin: 30px auto;
+    width: 50%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background: linear-gradient(40deg,#ffd86f,#fc6262);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 3px #00000029, 0 2px 10px 3px #0000001f;
+    transition: 0.5s;
 }
