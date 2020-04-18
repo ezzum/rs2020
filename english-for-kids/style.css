@@ -12,6 +12,57 @@ body {
 .header-container {
     height: 100px;
     margin: 0 70px;
+    display: flex;
+}
+.switch {
+    margin-top: 30px;
+    width: 130px;
+    height: 50px;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px 0 #00000029, inset 0 2px 10px 0 #0000001f;
+    cursor: pointer;
+    display: flex;
+}
+.switch:hover {
+    box-shadow: 0 2px 15px 0 #0000004b, 0 2px 15px 0 #00000049;
+}
+.train {
+    background: linear-gradient(40deg,#0099ae,#00bf82);
+}
+.play {
+    background: linear-gradient(40deg,#ffd86f,#fc6262);
+}
+.mode {
+    position: relative;
+    margin: auto;
+    left: 0px;
+    transition: 0.5s;
+}
+.handle {
+    width: 50px;
+    height: 50px;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(40%,#fff),to(#f0f0f0));
+    border-radius: 8px;
+    position: relative;
+    transform: scale(0.9);
+    left: 0px;
+    transition: 0.5s;
+}
+.handle::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+    width: 20px;
+    height: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: inset 0 1px rgba(0,0,0,.02);
+    background-image: linear-gradient(180deg,#eee,#fff);
+}
+.name-category {
+    margin: 30px auto;
 }
 .nav_bar {
     display: flex;
@@ -28,6 +79,11 @@ body {
     font-size: 25px;
     line-height: 65px;
     color: #fff;
+} 
+@media (max-width:400px) {
+    .nav_bar-item {
+        font-size: 20px;
+    }
 }
 .active {
     text-decoration: underline;

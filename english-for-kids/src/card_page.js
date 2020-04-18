@@ -7,6 +7,8 @@ class CardPage {
   }
 
   renderCard() {
+    document.querySelector('.name-category').innerHTML = this.array[0][this.id];
+
     for (let i = 0; i < this.array[this.id].length; i += 1) {
       const elem = document.createElement('div');
       elem.className = `${this.selector} card`;

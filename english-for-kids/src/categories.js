@@ -7,6 +7,12 @@ class Categories {
   }
 
   renderCat() {
+    const header = document.createElement('h1');
+    header.className = 'name-category';
+    header.innerHTML = `${this.array[0][0]}`;
+    document.querySelector('.switch').before(header);
+
+
     for (let i = 1; i < this.array[0].length; i += 1) {
       const element = document.createElement('div');
       element.className = this.selector;

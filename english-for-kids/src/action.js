@@ -20,7 +20,6 @@ class Action {
 
       document.querySelector('.nav_bar').style.left = menuLeft === '0px' ? '-400px' : '0px';
       document.querySelector('.menu-back').style.display = menuBack === 'none' ? 'block' : 'none';
-
     });
   }
 
@@ -80,6 +79,7 @@ class Action {
       });
 
       if (event.target.id === '0') {
+        document.querySelector('.name-category').remove();
         document.querySelector('.main-container').classList.remove('cards');
         const categories = new Categories('main-container', 'category', cards);
         categories.renderCat();
@@ -114,6 +114,22 @@ class Action {
       document.querySelector('.line0').style.top = '0px';
       document.querySelector('.line2').style.transform = 'rotate(0deg)';
     }
+  }
+
+  switchClick() {
+    document.querySelector('.switch').addEventListener(this.click, () => {
+      if (document.querySelector('.mode').innerHTML === 'TRAIN') {
+        document.querySelector('.mode').style.left = '50px';
+        document.querySelector('.mode').innerHTML = 'PLAY';
+        document.querySelector('.handle').style.left = '-80px';
+        document.querySelector('.switch').className = 'switch play';
+      } else {
+        document.querySelector('.mode').style.left = '0px';
+        document.querySelector('.mode').innerHTML = 'TRAIN';
+        document.querySelector('.handle').style.left = '0px';
+        document.querySelector('.switch').className = 'switch train';
+      }
+    });
   }
 }
 
