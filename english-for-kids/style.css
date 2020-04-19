@@ -70,8 +70,9 @@ body {
     display: flex;
     flex-direction: column;
     position: absolute;
+    min-height: 600px;
     height: calc(100vh - 125px);
-    padding: 125px 70px 0 80px;
+    padding: 125px 115px 0 115px;
     background: linear-gradient(180deg,#0099ae,#00bf82);
     transition: left 0.5s;
     z-index: 2;
@@ -257,5 +258,8 @@ body {
     }
     .result-img {
         width: 80%;
+    }
+    .nav_bar {
+        padding: 125px 75px 0 75px;
     }
 }
