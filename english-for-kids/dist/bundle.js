@@ -287,6 +287,15 @@ var Action = /*#__PURE__*/function () {
           if (document.querySelector('.name-category').innerHTML !== 'Main Page') {
             document.querySelector('.start').remove();
           }
+
+          if (document.querySelector('.rating')) {
+            document.querySelector('.rating').innerHTML = '';
+          }
+
+          document.querySelectorAll('.img-card').forEach(function (el) {
+            el.style.opacity = '1';
+            el.style.cursor = 'pointer';
+          });
         }
       });
     }
@@ -295,7 +304,9 @@ var Action = /*#__PURE__*/function () {
     value: function startGame(event) {
       var _this4 = this;
 
-      if (event.target.className === 'main-container cards') return;
+      if (event.target.className === 'rating') return;
+      if (event.target.className.includes('main-container')) return;
+      if (event.target.className === 'img-card img-play' && document.querySelector('.start').innerHTML === 'Start Game') return;
 
       if (event.target.className === 'start') {
         document.querySelector('.start').classList.add('start-push');

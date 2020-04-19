@@ -169,13 +169,21 @@ class Action {
         if (document.querySelector('.name-category').innerHTML !== 'Main Page') {
           document.querySelector('.start').remove();
         }
+        if (document.querySelector('.rating')) {
+          document.querySelector('.rating').innerHTML = '';
+        }
+        document.querySelectorAll('.img-card').forEach((el) => {
+          el.style.opacity = '1';
+          el.style.cursor = 'pointer';
+        });
       }
     });
   }
 
   startGame(event) {
-    if (event.target.className === 'main-container cards') return;
-
+    if (event.target.className === 'rating') return;
+    if (event.target.className.includes('main-container')) return;
+    if (event.target.className === 'img-card img-play' && document.querySelector('.start').innerHTML === 'Start Game') return;
     if (event.target.className === 'start') {
       document.querySelector('.start').classList.add('start-push');
       document.querySelector('.start').innerHTML = 'Repeat';
