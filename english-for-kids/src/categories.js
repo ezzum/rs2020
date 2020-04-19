@@ -7,6 +7,10 @@ class Categories {
   }
 
   renderCat() {
+    if (document.querySelector('.name-category')) {
+      document.querySelector('.name-category').remove();
+    }
+
     const header = document.createElement('h1');
     header.className = 'name-category';
     header.innerHTML = `${this.array[0][0]}`;
@@ -14,6 +18,10 @@ class Categories {
 
     if (document.querySelector('.rating')) {
       document.querySelector('.rating').remove();
+    }
+
+    if (document.querySelector('.result-img')) {
+      document.querySelector('.result-img').remove();
     }
 
     for (let i = 1; i < this.array[0].length; i += 1) {
