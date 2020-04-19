@@ -86,6 +86,351 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/action.js":
+/*!***********************!*\
+  !*** ./src/action.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _card_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./card_page */ "./src/card_page.js");
+/* harmony import */ var _categories__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./categories */ "./src/categories.js");
+/* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./card */ "./src/card.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+var Action = /*#__PURE__*/function () {
+  function Action(array) {
+    _classCallCheck(this, Action);
+
+    this.array = array;
+    this.click = 'click';
+    this.currentCat = null;
+    this.menuLeft = '';
+    this.shuffle = [];
+    this.currentCard = null;
+    this.src = './src/';
+  }
+
+  _createClass(Action, [{
+    key: "buttMenuClick",
+    value: function buttMenuClick() {
+      var _this = this;
+
+      document.querySelector('.butt_menu').addEventListener(this.click, function () {
+        var menuLeft = document.querySelector('.nav_bar').style.left;
+        var menuBack = document.querySelector('.menu-back').style.display;
+
+        _this.transformButtMenu();
+
+        document.querySelector('.nav_bar').style.left = menuLeft === '0px' ? '-400px' : '0px';
+        document.querySelector('.menu-back').style.display = menuBack === 'none' ? 'block' : 'none';
+      });
+    }
+  }, {
+    key: "elementClick",
+    value: function elementClick() {
+      var _this2 = this;
+
+      document.querySelector('.main-container').addEventListener(this.click, function (event) {
+        if (event.target.className === 'main-container') return;
+
+        if (document.querySelector('.main-container').className === 'main-container') {
+          document.querySelectorAll('.category').forEach(function (el) {
+            el.remove();
+          });
+          document.querySelector('.main-container').classList.add('cards');
+          var cardPage = new _card_page__WEBPACK_IMPORTED_MODULE_0__["default"]('main-container', 'category', _this2.array, event.target.id);
+          cardPage.renderCard();
+          document.querySelectorAll('.nav_bar-item').forEach(function (el) {
+            el.classList.remove('active');
+          });
+          document.querySelectorAll('.nav_bar-item')[event.target.id].classList.add('active');
+          _this2.currentCat = event.target.id;
+          return;
+        }
+
+        if (event.target.className === 'rotate') {
+          document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(180deg)';
+          document.querySelectorAll('.category')[event.target.parentElement.id].addEventListener('mouseleave', function () {
+            document.querySelectorAll('.category')[event.target.parentElement.id].style.transform = 'rotateY(0deg)';
+          });
+        }
+
+        if (event.target.className.endsWith('card') && document.querySelector('.mode').innerHTML === 'TRAIN') {
+          var audio = new Audio();
+          audio.src = "./src/".concat(_this2.array[_this2.currentCat][event.target.parentElement.id].audioSrc);
+          audio.play();
+        }
+
+        if (document.querySelector('.mode').innerHTML === 'PLAY' && document.querySelector('.start')) {
+          _this2.startGame(event);
+        }
+      });
+    }
+  }, {
+    key: "menuClick",
+    value: function menuClick() {
+      var _this3 = this;
+
+      document.querySelector('.nav_bar').addEventListener(this.click, function (event) {
+        if (event.target.className === 'nav_bar') return;
+
+        _this3.transformButtMenu();
+
+        document.querySelector('.nav_bar').style.left = '-400px';
+        document.querySelector('.menu-back').style.display = 'none';
+        document.querySelectorAll('.nav_bar-item').forEach(function (el) {
+          el.classList.remove('active');
+        });
+        document.querySelectorAll('.nav_bar-item')[event.target.id].classList.add('active');
+        document.querySelectorAll('.category').forEach(function (el) {
+          el.remove();
+        });
+
+        if (document.querySelector('.start')) {
+          document.querySelector('.start').remove();
+        }
+
+        if (event.target.id === '0') {
+          document.querySelector('.main-container').classList.remove('cards');
+          document.querySelector('.main-container').id = 0;
+          var categories = new _categories__WEBPACK_IMPORTED_MODULE_1__["default"]('main-container', 'category', _card__WEBPACK_IMPORTED_MODULE_2__["default"]);
+          categories.renderCat();
+          return;
+        }
+
+        document.querySelector('.main-container').classList.add('cards');
+        var cardPage = new _card_page__WEBPACK_IMPORTED_MODULE_0__["default"]('main-container', 'category', _this3.array, event.target.id);
+        cardPage.renderCard();
+        _this3.currentCat = event.target.id;
+      });
+      document.querySelector('.menu-back').addEventListener(this.click, function () {
+        _this3.transformButtMenu();
+
+        document.querySelector('.nav_bar').style.left = '-400px';
+        document.querySelector('.menu-back').style.display = 'none';
+      });
+    }
+  }, {
+    key: "transformButtMenu",
+    value: function transformButtMenu() {
+      this.menuLeft = document.querySelector('.nav_bar').style.left;
+
+      if (this.menuLeft === '-400px') {
+        document.querySelector('.line1').style.opacity = '0';
+        document.querySelector('.line0').style.transform = 'rotate(45deg)';
+        document.querySelector('.line0').style.top = '-4px';
+        document.querySelector('.line2').style.transform = 'rotate(-45deg)';
+      } else {
+        document.querySelector('.line1').style.opacity = '1';
+        document.querySelector('.line0').style.transform = 'rotate(0deg)';
+        document.querySelector('.line0').style.top = '0px';
+        document.querySelector('.line2').style.transform = 'rotate(0deg)';
+      }
+    }
+  }, {
+    key: "switchClick",
+    value: function switchClick() {
+      document.querySelector('.switch').addEventListener(this.click, function () {
+        if (document.querySelector('.mode').innerHTML === 'TRAIN') {
+          document.querySelector('.mode').style.left = '50px';
+          document.querySelector('.mode').innerHTML = 'PLAY';
+          document.querySelector('.handle').style.left = '-80px';
+          document.querySelector('.switch').className = 'switch play';
+          document.querySelectorAll('.category').forEach(function (el) {
+            el.classList.add('cat-play');
+          });
+          document.querySelectorAll('.rotate').forEach(function (el) {
+            el.classList.add('hide');
+          });
+          document.querySelectorAll('.descrip-card').forEach(function (el) {
+            el.classList.add('hide');
+          });
+          document.querySelectorAll('.img-card').forEach(function (el) {
+            el.classList.add('img-play');
+          });
+
+          if (document.querySelector('.name-category').innerHTML !== 'Main Page') {
+            var start = document.createElement('div');
+            start.className = 'start';
+            start.innerHTML = 'Start Game';
+            document.querySelector('.main-container').append(start);
+          }
+        } else {
+          document.querySelector('.mode').style.left = '0px';
+          document.querySelector('.mode').innerHTML = 'TRAIN';
+          document.querySelector('.handle').style.left = '0px';
+          document.querySelector('.switch').className = 'switch train';
+          document.querySelectorAll('.category').forEach(function (el) {
+            el.classList.remove('cat-play');
+          });
+          document.querySelectorAll('.rotate').forEach(function (el) {
+            el.classList.remove('hide');
+          });
+          document.querySelectorAll('.descrip-card').forEach(function (el) {
+            el.classList.remove('hide');
+          });
+          document.querySelectorAll('.img-card').forEach(function (el) {
+            el.classList.remove('img-play');
+          });
+
+          if (document.querySelector('.name-category').innerHTML !== 'Main Page') {
+            document.querySelector('.start').remove();
+          }
+        }
+      });
+    }
+  }, {
+    key: "startGame",
+    value: function startGame(event) {
+      var _this4 = this;
+
+      if (event.target.className === 'main-container cards') return;
+
+      if (event.target.className === 'start') {
+        document.querySelector('.start').classList.add('start-push');
+        document.querySelector('.start').innerHTML = 'Repeat';
+
+        var shuffle = function shuffle(array) {
+          return array.sort(function () {
+            return Math.random() - 0.5;
+          });
+        };
+
+        var arr = [0, 1, 2, 3, 4, 5, 6, 7];
+        this.shuffle = shuffle(arr);
+      }
+
+      if (event.target.style.opacity === '0.5') return;
+
+      if (event.target.className.includes('card') && document.querySelector('.start').innerHTML === 'Repeat' && event.target.style.opacity === '1') {
+        if (parseInt(event.target.parentElement.id, 10) === this.currentCard) {
+          var starWin = document.createElement('img');
+          starWin.src = './src/img/star-win.svg';
+          starWin.className = 'correctly';
+          document.querySelector('.rating').prepend(starWin);
+          var audio = new Audio();
+          audio.src = './src/audio/correct.mp3';
+          audio.play();
+          event.target.style.opacity = '0.5';
+          event.target.style.cursor = 'default';
+        } else {
+          var star = document.createElement('img');
+          star.src = './src/img/star.svg';
+          star.className = 'wrong';
+          document.querySelector('.rating').prepend(star);
+
+          var _audio = new Audio();
+
+          _audio.src = './src/audio/error.mp3';
+
+          _audio.play();
+
+          return;
+        }
+      }
+
+      if (this.shuffle.length === 0) {
+        setTimeout(function () {
+          document.querySelectorAll('.category').forEach(function (el) {
+            el.remove();
+          });
+
+          _this4.resultGame();
+        }, 1000);
+        document.querySelector('.main-container').classList.remove('cards');
+        setTimeout(function () {
+          document.querySelector('.main-container').style.flexDirection = '';
+          document.querySelector('.res-rating').remove();
+          var categories = new _categories__WEBPACK_IMPORTED_MODULE_1__["default"]('main-container', 'category', _card__WEBPACK_IMPORTED_MODULE_2__["default"]);
+          categories.renderCat();
+        }, 4000);
+        return;
+      }
+
+      if (document.querySelector('.start').innerHTML === 'Repeat') {
+        if (event.target.className.includes('game-run')) {
+          var _audio2 = new Audio();
+
+          _audio2.src = "./src/".concat(this.array[this.currentCat][this.currentCard].audioSrc);
+
+          _audio2.play();
+
+          return;
+        }
+
+        document.querySelector('.start').classList.add('game-run');
+        this.currentCard = this.shuffle.shift();
+        setTimeout(function () {
+          var audio = new Audio();
+          audio.src = "./src/".concat(_this4.array[_this4.currentCat][_this4.currentCard].audioSrc);
+          audio.play();
+        }, 1000);
+      }
+    }
+  }, {
+    key: "resultGame",
+    value: function resultGame() {
+      var _document$querySelect = document.querySelectorAll('.wrong'),
+          length = _document$querySelect.length;
+
+      if (length > 0) {
+        document.querySelector('.start').remove();
+        document.querySelector('.rating').remove();
+        var audio = new Audio();
+        audio.src = "".concat(this.src, "audio/failure.mp3");
+        audio.play();
+        var fail = document.createElement('img');
+        fail.className = 'result-img';
+        fail.src = "".concat(this.src, "img/failure.jpg");
+        document.querySelector('.main-container').append(fail);
+        var resultRating = document.createElement('p');
+        resultRating.className = 'res-rating';
+        resultRating.innerHTML = length > 1 ? "".concat(length, " Errors") : "".concat(length, " Error");
+        document.querySelector('.main-container').append(resultRating);
+        document.querySelector('.main-container').style.flexDirection = 'column';
+      } else {
+        document.querySelector('.start').remove();
+        document.querySelector('.rating').remove();
+
+        var _audio3 = new Audio();
+
+        _audio3.src = "".concat(this.src, "audio/success.mp3");
+
+        _audio3.play();
+
+        var win = document.createElement('img');
+        win.className = 'result-img';
+        win.src = "".concat(this.src, "img/success.jpg");
+        document.querySelector('.main-container').append(win);
+
+        var _resultRating = document.createElement('p');
+
+        _resultRating.className = 'res-rating';
+        _resultRating.innerHTML = 'Win!';
+        document.querySelector('.main-container').append(_resultRating);
+        document.querySelector('.main-container').style.flexDirection = 'column';
+      }
+    }
+  }]);
+
+  return Action;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Action);
+
+/***/ }),
+
 /***/ "./src/app-container.js":
 /*!******************************!*\
   !*** ./src/app-container.js ***!
@@ -107,14 +452,22 @@ var AppContainer = /*#__PURE__*/function () {
 
     this.target = target;
     this.selector = selector;
+    this.head = null;
+    this.main = null;
   }
 
   _createClass(AppContainer, [{
     key: "render",
     value: function render() {
-      var element = document.createElement('div');
-      element.className = this.selector;
-      document.querySelector(this.target).append(element);
+      var container = document.createElement('div');
+      container.className = this.selector;
+      document.querySelector(this.target).append(container);
+      this.head = document.createElement('div');
+      this.head.className = "header-".concat(this.selector);
+      document.querySelector(".".concat(this.selector)).append(this.head);
+      this.main = document.createElement('div');
+      this.main.className = "main-".concat(this.selector);
+      document.querySelector(".".concat(this.selector)).append(this.main);
     }
   }]);
 
@@ -153,24 +506,14 @@ var ButtMenu = /*#__PURE__*/function () {
     value: function render() {
       var butt = document.createElement('div');
       butt.className = this.selector;
+      butt.style.transform = 'rotate(0deg)';
       document.querySelector(".".concat(this.target)).append(butt);
 
       for (var i = 0; i < 3; i += 1) {
         var elem = document.createElement('div');
+        elem.className = "line".concat(i);
         document.querySelector(".".concat(this.selector)).append(elem);
       }
-    }
-  }, {
-    key: "click",
-    value: function click() {
-      var _this = this;
-
-      document.querySelector(".".concat(this.selector)).addEventListener('click', function () {
-        var left = document.querySelector('.nav_bar').style.left;
-        var rotate = document.querySelector(".".concat(_this.selector)).style.transform;
-        document.querySelector('.nav_bar').style.left = left === '-340px' ? '0px' : '-340px';
-        document.querySelector(".".concat(_this.selector)).style.transform = rotate === 'rotate(360deg)' ? 'rotate(0deg)' : 'rotate(360deg)';
-      });
     }
   }]);
 
@@ -435,6 +778,97 @@ var cards = [['Main Page', 'Action (set A)', 'Action (set B)', 'Animal (set A)',
 
 /***/ }),
 
+/***/ "./src/card_page.js":
+/*!**************************!*\
+  !*** ./src/card_page.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var CardPage = /*#__PURE__*/function () {
+  function CardPage(target, selector, array, id) {
+    _classCallCheck(this, CardPage);
+
+    this.target = target;
+    this.selector = selector;
+    this.array = array;
+    this.id = id;
+  }
+
+  _createClass(CardPage, [{
+    key: "renderCard",
+    value: function renderCard() {
+      document.querySelector('.name-category').innerHTML = this.array[0][this.id];
+      var mode = document.querySelector('.mode').innerHTML;
+
+      if (document.querySelector('.rating')) {
+        document.querySelector('.rating').remove();
+      }
+
+      var rating = document.createElement('div');
+      rating.className = 'rating';
+      document.querySelector(".".concat(this.target)).append(rating);
+
+      for (var i = 0; i < this.array[this.id].length; i += 1) {
+        var elem = document.createElement('div');
+        elem.className = "".concat(this.selector, " card");
+        elem.id = i;
+        document.querySelector(".".concat(this.target)).append(elem);
+        var front = document.createElement('div');
+        front.className = 'front-card';
+        front.id = i;
+        document.querySelectorAll(".".concat(this.selector))[i].append(front);
+        var img = document.createElement('img');
+        img.src = "./src/".concat(this.array[this.id][i].image);
+        img.className = mode === 'TRAIN' ? 'img-card' : 'img-card img-play';
+        img.style.opacity = 1;
+        document.querySelectorAll('.front-card')[i].append(img);
+        var descrip = document.createElement('div');
+        descrip.className = mode === 'TRAIN' ? 'descrip-card' : 'descrip-card hide';
+        descrip.innerHTML = "".concat(this.array[this.id][i].word);
+        document.querySelectorAll('.front-card')[i].append(descrip);
+        var back = document.createElement('div');
+        back.className = 'back-card';
+        back.id = i;
+        document.querySelectorAll(".".concat(this.selector))[i].append(back);
+        var imgBack = document.createElement('img');
+        imgBack.src = "./src/".concat(this.array[this.id][i].image);
+        imgBack.className = 'img-card';
+        document.querySelectorAll('.back-card')[i].append(imgBack);
+        var descripBack = document.createElement('div');
+        descripBack.className = 'descrip-card';
+        descripBack.innerHTML = "".concat(this.array[this.id][i].translation);
+        document.querySelectorAll('.back-card')[i].append(descripBack);
+        var rotate = document.createElement('img');
+        rotate.className = mode === 'TRAIN' ? 'rotate' : 'rotate hide';
+        rotate.src = './src/img/rotate.png';
+        document.querySelectorAll(".".concat(this.selector))[i].append(rotate);
+      }
+
+      if (mode === 'PLAY') {
+        var start = document.createElement('div');
+        start.className = 'start';
+        start.innerHTML = 'Start Game';
+        document.querySelector('.main-container').append(start);
+      }
+    }
+  }]);
+
+  return CardPage;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (CardPage);
+
+/***/ }),
+
 /***/ "./src/categories.js":
 /*!***************************!*\
   !*** ./src/categories.js ***!
@@ -457,14 +891,32 @@ var Categories = /*#__PURE__*/function () {
     this.target = target;
     this.selector = selector;
     this.array = array;
+    this.id = '';
   }
 
   _createClass(Categories, [{
     key: "renderCat",
     value: function renderCat() {
+      if (document.querySelector('.name-category')) {
+        document.querySelector('.name-category').remove();
+      }
+
+      var header = document.createElement('h1');
+      header.className = 'name-category';
+      header.innerHTML = "".concat(this.array[0][0]);
+      document.querySelector('.switch').before(header);
+
+      if (document.querySelector('.rating')) {
+        document.querySelector('.rating').remove();
+      }
+
+      if (document.querySelector('.result-img')) {
+        document.querySelector('.result-img').remove();
+      }
+
       for (var i = 1; i < this.array[0].length; i += 1) {
         var element = document.createElement('div');
-        element.className = this.selector;
+        element.className = document.querySelector('.mode').innerHTML === 'PLAY' ? "".concat(this.selector, " cat-play") : this.selector;
         element.id = i;
         document.querySelector(".".concat(this.target)).append(element);
         var img = document.createElement('img');
@@ -478,156 +930,12 @@ var Categories = /*#__PURE__*/function () {
         document.querySelectorAll(".".concat(this.selector))[i - 1].append(descrip);
       }
     }
-  }, {
-    key: "click",
-    value: function click() {
-      var _this = this;
-
-      document.querySelector(".".concat(this.target)).addEventListener('click', function (event) {
-        console.log(event.target);
-        var id = parseInt(event.target.id, 10);
-
-        if (event.target.className === 'rotate') {
-          _this.rotate(event);
-
-          return;
-        }
-
-        if (event.target.className === _this.target) {
-          return;
-        }
-
-        document.querySelectorAll(".".concat(_this.selector)).forEach(function (el) {
-          el.remove();
-        });
-
-        _this.renderCard(id);
-      });
-    }
-  }, {
-    key: "renderCard",
-    value: function renderCard(id) {
-      for (var i = 0; i < this.array[id].length; i += 1) {
-        var elem = document.createElement('div');
-        elem.className = "".concat(this.selector, " card");
-        document.querySelector(".".concat(this.target)).append(elem);
-        var front = document.createElement('div');
-        front.className = 'front';
-        document.querySelectorAll(".".concat(this.selector))[i].append(front);
-        var img = document.createElement('img');
-        img.src = "./src/".concat(this.array[id][i].image);
-        img.className = 'img-card';
-        document.querySelectorAll('.front')[i].append(img);
-        var descrip = document.createElement('div');
-        descrip.className = 'descrip';
-        descrip.innerHTML = "".concat(this.array[id][i].word);
-        document.querySelectorAll('.front')[i].append(descrip);
-        var back = document.createElement('div');
-        back.className = 'back';
-        document.querySelectorAll(".".concat(this.selector))[i].append(back);
-        var imgBack = document.createElement('img');
-        imgBack.src = "./src/".concat(this.array[id][i].image);
-        imgBack.className = 'img-card';
-        document.querySelectorAll('.back')[i].append(imgBack);
-        var descripBack = document.createElement('div');
-        descripBack.className = 'descrip';
-        descripBack.innerHTML = "".concat(this.array[id][i].translation);
-        document.querySelectorAll('.back')[i].append(descripBack);
-        var rotate = document.createElement('img');
-        rotate.className = 'rotate';
-        rotate.src = './src/img/rotate.png';
-        document.querySelectorAll(".".concat(this.selector))[i].append(rotate);
-      }
-    }
-  }, {
-    key: "rotate",
-    value: function rotate(event) {
-      event.target.parentElement.style.transform = 'rotateY(180deg)';
-    }
   }]);
 
   return Categories;
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Categories);
-
-/***/ }),
-
-/***/ "./src/header.js":
-/*!***********************!*\
-  !*** ./src/header.js ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Header = /*#__PURE__*/function () {
-  function Header(target, selector) {
-    _classCallCheck(this, Header);
-
-    this.target = target;
-    this.selector = selector;
-  }
-
-  _createClass(Header, [{
-    key: "render",
-    value: function render() {
-      var element = document.createElement('div');
-      element.className = this.selector;
-      document.querySelector(".".concat(this.target)).append(element);
-    }
-  }]);
-
-  return Header;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Header);
-
-/***/ }),
-
-/***/ "./src/main.js":
-/*!*********************!*\
-  !*** ./src/main.js ***!
-  \*********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Main = /*#__PURE__*/function () {
-  function Main(target, selector) {
-    _classCallCheck(this, Main);
-
-    this.target = target;
-    this.selector = selector;
-  }
-
-  _createClass(Main, [{
-    key: "render",
-    value: function render() {
-      var element = document.createElement('div');
-      element.className = this.selector;
-      document.querySelector(".".concat(this.target)).append(element);
-    }
-  }]);
-
-  return Main;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Main);
 
 /***/ }),
 
@@ -660,16 +968,22 @@ var Menu = /*#__PURE__*/function () {
     value: function render() {
       var menu = document.createElement('ul');
       menu.className = this.selector;
-      menu.style.left = '-340px';
+      menu.style.left = '-400px';
       document.querySelector(".".concat(this.target)).append(menu);
 
       for (var i = 0; i < this.array.length; i += 1) {
         var list = document.createElement('a');
         list.className = i === 0 ? "".concat(menu.className, "-item active") : "".concat(menu.className, "-item");
-        list.innerHTML = this.array[i];
+        list.innerHTML = this.array[0][i];
         list.href = '#';
+        list.id = i;
         document.querySelector(".".concat(menu.className)).append(list);
       }
+
+      var back = document.createElement('div');
+      back.className = 'menu-back';
+      back.style.display = 'none';
+      document.querySelector(".".concat(this.target)).append(back);
     }
   }]);
 
@@ -691,11 +1005,11 @@ var Menu = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./card */ "./src/card.js");
 /* harmony import */ var _app_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-container */ "./src/app-container.js");
-/* harmony import */ var _header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header */ "./src/header.js");
-/* harmony import */ var _butt_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./butt_menu */ "./src/butt_menu.js");
-/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main */ "./src/main.js");
-/* harmony import */ var _menu__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./menu */ "./src/menu.js");
-/* harmony import */ var _categories__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./categories */ "./src/categories.js");
+/* harmony import */ var _butt_menu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./butt_menu */ "./src/butt_menu.js");
+/* harmony import */ var _switch_mode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./switch_mode */ "./src/switch_mode.js");
+/* harmony import */ var _menu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu */ "./src/menu.js");
+/* harmony import */ var _categories__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./categories */ "./src/categories.js");
+/* harmony import */ var _action__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./action */ "./src/action.js");
 
 
 
@@ -705,18 +1019,64 @@ __webpack_require__.r(__webpack_exports__);
 
 var appContainer = new _app_container__WEBPACK_IMPORTED_MODULE_1__["default"]('body', 'container');
 appContainer.render();
-var header = new _header__WEBPACK_IMPORTED_MODULE_2__["default"](appContainer.selector, "header-".concat(appContainer.selector));
-header.render();
-var main = new _main__WEBPACK_IMPORTED_MODULE_4__["default"](appContainer.selector, "main-".concat(appContainer.selector));
-main.render();
-var buttMenu = new _butt_menu__WEBPACK_IMPORTED_MODULE_3__["default"](header.selector, 'butt_menu');
+var buttMenu = new _butt_menu__WEBPACK_IMPORTED_MODULE_2__["default"](appContainer.head.className, 'butt_menu');
 buttMenu.render();
-buttMenu.click();
-var menu = new _menu__WEBPACK_IMPORTED_MODULE_5__["default"](_card__WEBPACK_IMPORTED_MODULE_0__["default"][0], header.selector, 'nav_bar');
+var menu = new _menu__WEBPACK_IMPORTED_MODULE_4__["default"](_card__WEBPACK_IMPORTED_MODULE_0__["default"], appContainer.head.className, 'nav_bar');
 menu.render();
-var categories = new _categories__WEBPACK_IMPORTED_MODULE_6__["default"](main.selector, "".concat(main.selector, "-category"), _card__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var switchMode = new _switch_mode__WEBPACK_IMPORTED_MODULE_3__["default"](appContainer.head.className);
+switchMode.render();
+var categories = new _categories__WEBPACK_IMPORTED_MODULE_5__["default"](appContainer.main.className, 'category', _card__WEBPACK_IMPORTED_MODULE_0__["default"]);
 categories.renderCat();
-categories.click();
+var action = new _action__WEBPACK_IMPORTED_MODULE_6__["default"](_card__WEBPACK_IMPORTED_MODULE_0__["default"]);
+action.buttMenuClick();
+action.elementClick();
+action.menuClick();
+action.switchClick();
+
+/***/ }),
+
+/***/ "./src/switch_mode.js":
+/*!****************************!*\
+  !*** ./src/switch_mode.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var SwitchMode = /*#__PURE__*/function () {
+  function SwitchMode(target) {
+    _classCallCheck(this, SwitchMode);
+
+    this.target = target;
+  }
+
+  _createClass(SwitchMode, [{
+    key: "render",
+    value: function render() {
+      var switchMode = document.createElement('div');
+      switchMode.className = 'switch train';
+      document.querySelector(".".concat(this.target)).append(switchMode);
+      var mode = document.createElement('h3');
+      mode.className = 'mode';
+      mode.innerHTML = 'TRAIN';
+      document.querySelector('.switch').append(mode);
+      var handle = document.createElement('div');
+      handle.className = 'handle';
+      document.querySelector('.switch').append(handle);
+    }
+  }]);
+
+  return SwitchMode;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (SwitchMode);
 
 /***/ }),
 

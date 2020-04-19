@@ -10,15 +10,68 @@ body {
     margin: 0 auto;
 }
 .header-container {
-    height: 100px;
+    height: 150px;
     margin: 0 70px;
+    display: flex;
+}
+.switch {
+    margin: auto 0 auto auto;
+    width: 130px;
+    height: 50px;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px 0 #00000029, inset 0 2px 10px 0 #0000001f;
+    cursor: pointer;
+    display: flex;
+    transition: 0.5s;
+}
+.switch:hover {
+    box-shadow: 0 2px 15px 0 #0000004b, 0 2px 15px 0 #00000049;
+}
+.train {
+    background: linear-gradient(40deg,#0099ae,#00bf82);
+}
+.play {
+    background: linear-gradient(40deg,#ffd86f,#fc6262);
+}
+
+.mode {
+    position: relative;
+    margin: auto;
+    left: 0px;
+    transition: 0.5s;
+}
+.handle {
+    width: 50px;
+    height: 50px;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(40%,#fff),to(#f0f0f0));
+    border-radius: 8px;
+    position: relative;
+    transform: scale(0.9);
+    left: 0px;
+    transition: 0.5s;
+}
+.handle::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+    width: 20px;
+    height: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: inset 0 1px #00000005;
+    background-image: linear-gradient(180deg,#eee,#fff);
+}
+.name-category {
+    margin: auto auto auto 24%;
 }
 .nav_bar {
     display: flex;
     flex-direction: column;
     position: absolute;
-    height: 86vh;
-    padding: 125px 90px 0 90px;
+    height: 100vh;
+    padding: 125px 70px 0 80px;
     background: linear-gradient(180deg,#0099ae,#00bf82);
     transition: left 0.5s;
     z-index: 2;
@@ -28,14 +81,31 @@ body {
     font-size: 25px;
     line-height: 65px;
     color: #fff;
+    width: 170px;
+} 
+
+.active {
+    text-decoration: underline;
+}
+.menu-back {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: none;
 }
 .butt_menu {
     top: 50px;
     width: 35px;
-    position: absolute;
+    margin: auto auto auto 0;
     cursor: pointer;
     z-index: 5;
     transition: transform 0.8s;
+}
+.line0,
+.line2 {
+    transform-origin: left;
+    transition: transform 0.5s;
+    position: relative;
 }
 .butt_menu div {
     height: 4px;
@@ -43,12 +113,13 @@ body {
     margin-top: 6px;
     border-radius: 2px;
 }
-.main-container {
+.main-container,
+.main-container-cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.main-container-category {
+.category {
     margin: 10px;
     background: linear-gradient(180deg,#0099ae,#00bf82 40%,#fff 0,#fff);
     display: flex;
@@ -57,11 +128,14 @@ body {
     height: 300px;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 2px 5px 0 #00000029, 0 2px 10px 0 #0000001f;
+    box-shadow: 0 2px 5px 3px #00000029, 0 2px 10px 3px #0000001f;
     transition: box-shadow 0.5s;
 }
-.main-container-category:hover {
-    box-shadow: 0 2px 15px 0 #0000004b, 0 2px 15px 0 #00000049;
+.cat-play {
+    background: linear-gradient(180deg,#ffd86f,#fc6262 40%,#fff 0,#fff);
+}
+.category:hover {
+    box-shadow: 0 2px 15px 3px #0000004b, 0 0px 0px 3px #00000049;
 }
 .img-category {
     width: 150px;
@@ -71,10 +145,14 @@ body {
     border-radius: 50%;
     border: 10px solid #fff;
 }
-.main-container-category h2 {
+.category h2 {
     margin: auto;
 }
-
+.rating {
+    width: 90%;
+    height: 70px;
+    overflow: hidden;
+}
 .card {
     position: relative;
     width: 300px;
@@ -82,18 +160,17 @@ body {
     background-color: #fff;
     font-size: 25px;
     background: none;
-    display: inline;
     transform-style: preserve-3d;
     transform: rotateY(0deg);
-    transition: transform 1s;
+    transition: transform 1s, box-shadow 0.5s;
 }
-.front {
+.front-card {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
 }
-.back {
+.back-card {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -107,8 +184,9 @@ body {
     margin: 0;
     border-radius: 10px 10px 0 0;
     border: 0;
+    transition: 0.5s;
 }
-.descrip {
+.descrip-card {
     text-align: center;
     line-height: 55px;
 }
@@ -123,6 +201,63 @@ body {
 }
 .rotate:hover {
     filter: brightness(1);
+}
+.hide {
+    display: none;
+}
+.img-play {
+    height: 100%;
+    border-radius: 10px;
+}
+.start {
+    margin: 30px auto;
+    width: 90%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background: linear-gradient(40deg,#ffd86f,#fc6262);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 3px #00000029, 0 2px 10px 3px #0000001f;
+    transition: 0.5s;
+}
+.start:hover {
+    box-shadow: 0 2px 15px 3px #0000004b;
+}
+.start-push {
+    margin: 30px auto;
+    width: 50%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background: linear-gradient(40deg,#ffd86f,#fc6262);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 3px #00000029, 0 2px 10px 3px #0000001f;
+    transition: 0.5s;
+}
+.result-img {
+    margin: auto;
+}
+.res-rating {
+    margin: auto;
+    font-size: 50px;
+}
+
+@media (max-width:640px) {
+    .header-container {
+        flex-direction: column; 
+        height: 180px; 
+        margin: 0 20px; 
+    }
+    .butt_menu,
+    .name-category,
+    .switch {
+        margin: 10px auto;
+    }
+    .result-img {
+        width: 80%;
+    }
 }
 
 /*# sourceMappingURL=style.css.map*/
