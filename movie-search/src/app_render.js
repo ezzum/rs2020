@@ -7,36 +7,26 @@ class AppRender {
     this.footerBlock = footer;
   }
 
+  creElem(tag, className, inner, src, selector = this.target, index = 0) {
+    const elem = document.createElement(tag);
+    elem.className = className;
+    if (inner) elem.innerHTML = inner;
+    if (src) elem.src = src;
+    document.querySelectorAll(selector)[index].append(elem);
+  }
+
   app() {
-    const app = document.createElement('div');
-    app.className = this.appCont;
-
-    document.querySelector(`${this.target}`).append(app);
-
-    this.header();
-    this.main();
-    this.footer();
+    this.creElem('div', this.appCont, '', '', this.target);
+    this.creElem('div', this.headBlock, '', '', `.${this.appCont}`);
+    this.creElem('h1', `${this.headBlock}Text`, 'Movie Search', '', `.${this.headBlock}`);
+    this.creElem('div', this.mainBlock, '', '', `.${this.appCont}`);
+    this.form();
+    this.creElem('div', 'note', '', '', `.${this.mainBlock}`);
+    this.creElem('div', 'slider', '', '', `.${this.mainBlock}`);
+    this.creElem('div', this.footerBlock, '', '', `.${this.appCont}`);
   }
 
-  header() {
-    const head = document.createElement('div');
-    head.className = this.headBlock;
-
-    const headText = document.createElement('h1');
-    headText.innerHTML = 'Movie Search';
-    headText.className = `${this.headBlock}Text`;
-
-    document.querySelector(`.${this.appCont}`).append(head);
-    document.querySelector(`.${this.headBlock}`).append(headText);
-  }
-
-  main() {
-    const main = document.createElement('div');
-    main.className = this.mainBlock;
-
-    document.querySelector(`.${this.appCont}`).append(main);
-
-
+  form() {
     const form = document.createElement('form');
     form.action = '#';
     form.className = 'form';
@@ -55,22 +45,6 @@ class AppRender {
     document.querySelector(`.${this.mainBlock}`).append(form);
     document.querySelector('.form').append(input);
     document.querySelector('.form').append(submit);
-
-    const note = document.createElement('div');
-    note.className = 'note';
-    document.querySelector(`.${this.mainBlock}`).append(note);
-
-    const slider = document.createElement('div');
-    slider.className = 'slider';
-
-    document.querySelector(`.${this.mainBlock}`).append(slider);
-  }
-
-  footer() {
-    const footer = document.createElement('div');
-    footer.className = this.footerBlock;
-
-    document.querySelector(`.${this.appCont}`).append(footer);
   }
 }
 
