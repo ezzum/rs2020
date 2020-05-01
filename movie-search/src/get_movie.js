@@ -18,8 +18,6 @@ class GetMovie {
       rating.className = 'rating';
       rating.innerHTML = `IMDB Rating ${dataId.imdbRating}`;
       document.querySelectorAll('.card')[i].append(rating);
-
-      return dataId;
     }
 
     for (let i = 0; i < data.Search.length; i += 1) {

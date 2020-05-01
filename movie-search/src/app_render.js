@@ -44,6 +44,7 @@ class AppRender {
     const input = document.createElement('input');
     input.type = 'text';
     input.placeholder = ' Search movie';
+    input.autofocus = 'true';
     input.className = 'input';
 
     const submit = document.createElement('input');

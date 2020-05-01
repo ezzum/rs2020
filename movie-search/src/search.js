@@ -1,12 +1,12 @@
 import GetMovie from './get_movie';
 
-class Submit {
+class Search {
   constructor() {
     this.query = '';
     this.click = 'click';
   }
 
-  search() {
+  submit() {
     document.querySelector('.submit').addEventListener(this.click, () => {
       this.query = document.querySelector('.input').value;
 
@@ -20,4 +20,4 @@ class Submit {
   }
 }
 
-export default Submit;
+export default Search;
