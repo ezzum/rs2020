@@ -10,39 +10,29 @@ class GetMovie {
     const res = await fetch(url);
     const data = await res.json();
 
+    function CreElem(tag, className, inner, src, selector, index = 0) {
+      const elem = document.createElement(tag);
+      elem.className = className;
+      if (inner) elem.innerHTML = inner;
+      if (src) elem.src = src;
+      document.querySelectorAll(`.${selector}`)[index].append(elem);
+    }
+
     async function idRating(i, key) {
       const resId = await fetch(`https://www.omdbapi.com/?i=${data.Search[i].imdbID}&apikey=${key}`);
       const dataId = await resId.json();
 
-      const rating = document.createElement('p');
-      rating.className = 'rating';
-      rating.innerHTML = `IMDB Rating ${dataId.imdbRating}`;
-      document.querySelectorAll('.card')[i].append(rating);
+      CreElem('p', 'rating', `IMDB Rating ${dataId.imdbRating}`, '', 'card', i);
     }
 
     for (let i = 0; i < data.Search.length; i += 1) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      document.querySelector('.slider').append(card);
-
-      const title = document.createElement('h3');
-      title.className = 'title';
-      title.innerHTML = data.Search[i].Title;
-      document.querySelectorAll('.card')[i].append(title);
-
-      const img = document.createElement('img');
-      img.src = data.Search[i].Poster;
-      img.className = 'poster';
-      document.querySelectorAll('.card')[i].append(img);
-
-      const year = document.createElement('p');
-      year.className = 'year';
-      year.innerHTML = data.Search[i].Year;
-      document.querySelectorAll('.card')[i].append(year);
+      CreElem('div', 'card', '', '', 'slider');
+      CreElem('h3', 'title', data.Search[i].Title, '', 'card', i);
+      CreElem('img', 'poster', '', data.Search[i].Poster, 'card', i);
+      CreElem('p', 'year', data.Search[i].Year, '', 'card', i);
 
       idRating(i, this.key);
     }
-    console.log(data.Search);
   }
 }
 
