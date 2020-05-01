@@ -1,8 +1,88 @@
-$body-color: #19d8f1;
+@import url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);
 
-div {
-    height: 500px;
-    width: 400px;
-    margin: 100px auto;
-    background-color: $body-color;
+$head_color: #182e33;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+
+    .app-container {
+        // max-width: 1400px;
+        height: 100vh;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .header {
+            display: flex;
+            height: 70px;
+            background-color: #182e33;
+            justify-content: center;
+            align-items: center;
+        
+            .headerText {
+                color: #fff;
+            }
+        }
+        .main {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            height: 700px;
+            
+            .form {
+                display: flex;
+                margin: 0 auto;
+                width: 90%;
+                height: 30px;
+
+                .input {
+                    width: 80%;
+                }
+                .submit {
+                    width: 20%;
+                }
+            }
+
+            .note {
+                width: 90%;
+                text-align: center;
+                font-size: 30px;
+            }
+
+            .slider {
+                display: flex;
+                height: 480px;
+                flex-wrap: wrap;
+                overflow: hidden;
+                justify-content: space-evenly;
+                
+                .card {
+                    width: 300px;
+                    height: 470px;
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    align-items: center;
+
+                    .poster {
+                        height: 75%
+                    }
+                }
+                
+            }
+
+           
+
+        }
+        .footer {
+            height: 70px;
+            background-color: #182e33;
+        }
+    }
 }
