@@ -112,20 +112,49 @@ body {
                     flex-direction: column;
                     justify-content: space-evenly;
                     align-items: center;
+                    visibility: visible;
 
                     .poster {
                         height: 75%
                     }
+
+                    &.hide {
+                        visibility: hidden;
+                    }
                 }
                 
             }
-
-           
-
         }
         .footer {
             height: 70px;
             background-color: #182e33;
         }
+        .loader {
+            width: 75px;
+            height: 75px;
+            border: 10px solid #e7e7e7;
+            border-radius: 50%;
+            border-top-color: #2785dd;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            animation: 1s spin infinite linear;
+            visibility: visible;
+
+            &.hide {
+                visibility: hidden;
+                animation: none;
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
     }
 }

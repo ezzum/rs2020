@@ -24,6 +24,7 @@ class AppRender {
     this.createElement('div', 'note', '', '', `.${this.mainBlock}`);
     this.createElement('div', 'slider', '', '', `.${this.mainBlock}`);
     this.createElement('div', this.footerBlock, '', '', `.${this.appCont}`);
+    this.createElement('div', 'loader', '', '', `.${this.appCont}`);
   }
 
   form() {

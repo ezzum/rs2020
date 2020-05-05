@@ -6,6 +6,8 @@ class GetMovie {
 
   movie() {
     const url = `https://www.omdbapi.com/?s=${this.query}&apikey=${this.key}`;
+    const loader = document.querySelector('.loader');
+    const note = document.querySelector('.note');
 
     function CreateElement(tag, className, inner, src, selector, index = 0) {
       const elem = document.createElement(tag);
@@ -27,13 +29,14 @@ class GetMovie {
         }
 
         if (data.Response === 'True') {
+          loader.classList.remove('hide');
           document.querySelectorAll('.card').forEach((el) => {
             el.remove();
           });
         }
 
         for (let i = 0; i < data.Search.length; i += 1) {
-          CreateElement('div', 'card', '', '', 'slider');
+          CreateElement('div', 'card hide', '', '', 'slider');
           CreateElement('h3', 'title', data.Search[i].Title, '', 'card', i);
           CreateElement('img', 'poster', '',
             data.Search[i].Poster !== 'N/A' ? data.Search[i].Poster : '../src/img/no-poster.jpg',
@@ -41,10 +44,19 @@ class GetMovie {
           CreateElement('p', 'year', data.Search[i].Year, '', 'card', i);
           idRating(i, this.key);
         }
-        document.querySelector('.note').innerHTML = `Results for: "${this.query}"`;
+
+        note.innerHTML = `Results for: "${this.query}"`;
+      })
+      .finally(() => {
+        setTimeout(() => {
+          loader.classList.add('hide');
+          document.querySelectorAll('.card').forEach((elem) => {
+            elem.classList.remove('hide');
+          });
+        }, 1000);
       })
       .catch(() => {
-        document.querySelector('.note').innerHTML = `No results for: "${this.query}"`;
+        note.innerHTML = `No results for: "${this.query}"`;
       });
   }
 }
