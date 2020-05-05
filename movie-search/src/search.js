@@ -10,12 +10,14 @@ class Search {
     document.querySelector('.submit').addEventListener(this.click, () => {
       this.query = document.querySelector('.input').value;
 
-      document.querySelector('.note').innerHTML = `Results for: "${this.query}"`;
-
-      document.querySelector('.slider').innerHTML = '';
-
       const getMovie = new GetMovie(this.query);
       getMovie.movie();
+    });
+  }
+
+  clear() {
+    document.querySelector('.clear').addEventListener(this.click, () => {
+      document.querySelector('.input').value = '';
     });
   }
 }

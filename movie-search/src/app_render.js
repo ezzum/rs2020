@@ -7,7 +7,7 @@ class AppRender {
     this.footerBlock = footer;
   }
 
-  creElem(tag, className, inner, src, selector = this.target, index = 0) {
+  createElement(tag, className, inner, src, selector = this.target, index = 0) {
     const elem = document.createElement(tag);
     elem.className = className;
     if (inner) elem.innerHTML = inner;
@@ -16,14 +16,14 @@ class AppRender {
   }
 
   app() {
-    this.creElem('div', this.appCont, '', '', this.target);
-    this.creElem('div', this.headBlock, '', '', `.${this.appCont}`);
-    this.creElem('h1', `${this.headBlock}Text`, 'Movie Search', '', `.${this.headBlock}`);
-    this.creElem('div', this.mainBlock, '', '', `.${this.appCont}`);
+    this.createElement('div', this.appCont, '', '', this.target);
+    this.createElement('div', this.headBlock, '', '', `.${this.appCont}`);
+    this.createElement('h1', `${this.headBlock}Text`, 'Movie Search', '', `.${this.headBlock}`);
+    this.createElement('div', this.mainBlock, '', '', `.${this.appCont}`);
     this.form();
-    this.creElem('div', 'note', '', '', `.${this.mainBlock}`);
-    this.creElem('div', 'slider', '', '', `.${this.mainBlock}`);
-    this.creElem('div', this.footerBlock, '', '', `.${this.appCont}`);
+    this.createElement('div', 'note', '', '', `.${this.mainBlock}`);
+    this.createElement('div', 'slider', '', '', `.${this.mainBlock}`);
+    this.createElement('div', this.footerBlock, '', '', `.${this.appCont}`);
   }
 
   form() {
@@ -43,8 +43,12 @@ class AppRender {
     submit.className = 'submit';
 
     document.querySelector(`.${this.mainBlock}`).append(form);
-    document.querySelector('.form').append(input);
+    this.createElement('div', 'inp-cont', '', '', '.form');
+    document.querySelector('.inp-cont').append(input);
+    this.createElement('div', 'clear', '', '', '.inp-cont');
+    this.createElement('div', 'keyboard', '', '', '.inp-cont');
     document.querySelector('.form').append(submit);
+
   }
 }
 

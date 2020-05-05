@@ -4,13 +4,10 @@ class GetMovie {
     this.query = query;
   }
 
-  async movie() {
+  movie() {
     const url = `https://www.omdbapi.com/?s=${this.query}&apikey=${this.key}`;
 
-    const res = await fetch(url);
-    const data = await res.json();
-
-    function CreElem(tag, className, inner, src, selector, index = 0) {
+    function CreateElement(tag, className, inner, src, selector, index = 0) {
       const elem = document.createElement(tag);
       elem.className = className;
       if (inner) elem.innerHTML = inner;
@@ -18,21 +15,37 @@ class GetMovie {
       document.querySelectorAll(`.${selector}`)[index].append(elem);
     }
 
-    async function idRating(i, key) {
-      const resId = await fetch(`https://www.omdbapi.com/?i=${data.Search[i].imdbID}&apikey=${key}`);
-      const dataId = await resId.json();
+    return fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        function idRating(i, key) {
+          return fetch(`https://www.omdbapi.com/?i=${data.Search[i].imdbID}&apikey=${key}`)
+            .then((res) => res.json())
+            .then((dataId) => {
+              CreateElement('p', 'rating', `IMDb Rating ${dataId.imdbRating}`, '', 'card', i);
+            });
+        }
 
-      CreElem('p', 'rating', `IMDB Rating ${dataId.imdbRating}`, '', 'card', i);
-    }
+        if (data.Response === 'True') {
+          document.querySelectorAll('.card').forEach((el) => {
+            el.remove();
+          });
+        }
 
-    for (let i = 0; i < data.Search.length; i += 1) {
-      CreElem('div', 'card', '', '', 'slider');
-      CreElem('h3', 'title', data.Search[i].Title, '', 'card', i);
-      CreElem('img', 'poster', '', data.Search[i].Poster, 'card', i);
-      CreElem('p', 'year', data.Search[i].Year, '', 'card', i);
-
-      idRating(i, this.key);
-    }
+        for (let i = 0; i < data.Search.length; i += 1) {
+          CreateElement('div', 'card', '', '', 'slider');
+          CreateElement('h3', 'title', data.Search[i].Title, '', 'card', i);
+          CreateElement('img', 'poster', '',
+            data.Search[i].Poster !== 'N/A' ? data.Search[i].Poster : '../src/img/no-poster.jpg',
+            'card', i);
+          CreateElement('p', 'year', data.Search[i].Year, '', 'card', i);
+          idRating(i, this.key);
+        }
+        document.querySelector('.note').innerHTML = `Results for: "${this.query}"`;
+      })
+      .catch(() => {
+        document.querySelector('.note').innerHTML = `No results for: "${this.query}"`;
+      });
   }
 }
 

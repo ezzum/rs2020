@@ -39,14 +39,57 @@ body {
                 margin: 0 auto;
                 width: 90%;
                 height: 30px;
+                justify-content: space-between;
 
-                .input {
+                .inp-cont {
                     width: 80%;
+                    height: 100%;
+                    display: flex;
+                    border: 0.5px solid #b1b1b1;
+                    align-items: center;
+                    justify-content: space-evenly;
+
+                    .input {
+                        width: 85%;
+                        height: 95%;
+                        border: 0;
+                        outline: none;
+                    }
+
+                    .clear {
+                        width: 25px;
+                        height: 25px;
+                        background-image: url(./src/img/clear.png);
+                        background-size: cover;
+                        transition: 0.2s;
+                        &:hover {
+                            transform: scale(1.2);
+                        }
+                    }
+                    .keyboard {
+                        width: 50px;
+                        height: 25px;
+                        background-image: url(./src/img/keyboard.png);
+                        background-size: contain;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        transition: 0.2s;
+                        &:hover {
+                            transform: scale(1.2);
+                        }
+                    }
                 }
+
                 .submit {
-                    width: 20%;
+                    width: 19%;
+                    transition: 0.2s;
+                        &:hover {
+                            transform: scale(1.1);
+                        }
                 }
             }
+
+            
 
             .note {
                 width: 90%;

@@ -10,3 +10,4 @@ movie.movie();
 
 const search = new Search();
 search.submit();
+search.clear();
