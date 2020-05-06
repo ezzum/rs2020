@@ -23,12 +23,12 @@ class GetMovie {
           });
           for (let i = 0; i < data.Search.length; i += 1) {
             this.createElement('div', 'card hide', '', '', 'slider');
-            this.createElement('h3', 'title', data.Search[i].Title, '', 'card', i);
+            this.createElement('a', 'title', data.Search[i].Title, '', 'card', i);
             this.createElement('img', 'poster', '',
               data.Search[i].Poster !== 'N/A' ? data.Search[i].Poster : '../src/img/no-poster.jpg',
               'card', i);
             this.createElement('p', 'year', data.Search[i].Year, '', 'card', i);
-            this.idRating(i, this.keyIMDb, data);
+            this.idSearch(i, this.keyIMDb, data);
           }
         } else {
           throw new Error('No data');
@@ -60,17 +60,21 @@ class GetMovie {
     this.tag = tag;
   }
 
-  idRating(i, key, data) {
+  idSearch(i, key, data) {
     const url = `https://www.omdbapi.com/?i=${data.Search[i].imdbID}&apikey=${key}`;
+    const title = document.querySelectorAll('.title');
+
     return fetch(url)
       .then((res) => res.json())
       .then((dataId) => {
+        title[i].href = `https://www.imdb.com/title/${data.Search[i].imdbID}/videogallery/`;
         this.createElement('p', 'rating', `IMDb Rating ${dataId.imdbRating}`, '', 'card', i);
       });
   }
 
   translate() {
     const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${this.keyYandex}&text=${this.query}&lang=en`;
+
     return fetch(url)
       .then((res) => res.json())
       .then((data) => {
