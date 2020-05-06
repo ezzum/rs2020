@@ -11,7 +11,7 @@ class Search {
       this.query = document.querySelector('.input').value;
 
       const getMovie = new GetMovie(this.query);
-      getMovie.movie();
+      getMovie.translate();
     });
   }
 
