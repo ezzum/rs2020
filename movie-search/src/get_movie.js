@@ -41,7 +41,7 @@ class GetMovie {
             this.idSearch(i, this.keyIMDb, data, page);
           }
           swiper.classList.remove(swiper.classList[1]);
-          swiper.classList.add(query);
+          swiper.classList.add(query.replace(/ /g, '-'));
           swiper.id = page;
         } else {
           throw new Error('Movie not found!');
@@ -76,7 +76,7 @@ class GetMovie {
 
   idSearch(i, key, data, page) {
     const url = `https://www.omdbapi.com/?i=${data.Search[i].imdbID}&apikey=${key}`;
-    const title = document.querySelectorAll('.title');
+    const title = document.querySelectorAll(`.page${page}>.title`);
 
     return fetch(url)
       .then((res) => res.json())

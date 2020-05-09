@@ -11,7 +11,7 @@ class Swiper {
     this.posLastSlide = '';
     this.lastSlideVisible = false;
     this.widthSlide = 300;
-    this.offset = 1000;
+    this.offset = 500;
   }
 
   constants() {
@@ -74,21 +74,29 @@ class Swiper {
 
   swipeMouse() {
     let origin;
+    const swiperBorders = {
+      left: document.querySelector('.swiper-wrapper').offsetLeft + 5,
+      right: document.querySelector('.swiper-wrapper').offsetLeft + document.querySelector('.swiper-wrapper').clientWidth - 5,
+    };
 
     const move = (event) => {
       event.preventDefault();
+
       this.slides.forEach((elem) => {
         elem.style.left = `${this.positionSlide - (origin - event.pageX)}px`;
       });
+
+      if (event.pageX < swiperBorders.left || event.pageX > swiperBorders.right) {
+        this.swiper.removeEventListener('mousemove', move);
+        this.slides.forEach((elem) => {
+          elem.classList.remove('move');
+        });
+      }
     };
 
     this.swiper.addEventListener('mousedown', (event) => {
       this.checkPosLastSlide();
       this.constants();
-
-      this.swiper.addEventListener('mouseleave', () => {
-        this.swiper.removeEventListener('mousemove', move);
-      });
 
       this.slides.forEach((elem) => {
         elem.classList.add('move');
@@ -107,7 +115,7 @@ class Swiper {
 
   checkPosLastSlide() {
     const containerWidth = document.querySelector('.swiper-container').clientWidth;
-    const query = document.querySelector('.swiper-wrapper').classList[1];
+    const query = document.querySelector('.swiper-wrapper').classList[1].replace(/-/g, ' ');
     const page = parseInt(document.querySelector('.swiper-wrapper').id, 10) + 1;
 
     if (containerWidth + this.offset > this.posLastSlide && this.lastSlideVisible === false) {
