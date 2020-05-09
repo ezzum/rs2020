@@ -30,8 +30,6 @@ class Swiper {
 
       this.checkPosLastSlide();
     });
-
-    this.swipeLeft();
   }
 
   left() {
@@ -46,10 +44,39 @@ class Swiper {
     });
   }
 
-  swipeLeft() {
+  swipe() {
     let origin;
 
     const move = (event) => {
+      event.preventDefault();
+      this.slides.forEach((elem) => {
+        elem.style.left = `${this.positionSlide - (origin - event.touches[0].pageX)}px`;
+      });
+    };
+
+    this.swiper.addEventListener('touchstart', (event) => {
+      this.checkPosLastSlide();
+      this.constants();
+
+      this.slides.forEach((elem) => {
+        elem.classList.add('move');
+      });
+      origin = event.touches[0].pageX;
+      this.swiper.addEventListener('touchmove', move);
+    });
+    this.swiper.addEventListener('touchend', () => {
+      this.slides.forEach((elem) => {
+        elem.classList.remove('move');
+      });
+      this.swiper.removeEventListener('touchmove', move);
+    });
+  }
+
+  swipeMouse() {
+    let origin;
+
+    const move = (event) => {
+      event.preventDefault();
       this.slides.forEach((elem) => {
         elem.style.left = `${this.positionSlide - (origin - event.pageX)}px`;
       });
@@ -58,12 +85,18 @@ class Swiper {
     this.swiper.addEventListener('mousedown', (event) => {
       this.checkPosLastSlide();
       this.constants();
+
+      this.swiper.addEventListener('mouseleave', () => {
+        this.swiper.removeEventListener('mousemove', move);
+      });
+
       this.slides.forEach((elem) => {
         elem.classList.add('move');
       });
       origin = event.pageX;
       this.swiper.addEventListener('mousemove', move);
     });
+
     this.swiper.addEventListener('mouseup', () => {
       this.slides.forEach((elem) => {
         elem.classList.remove('move');

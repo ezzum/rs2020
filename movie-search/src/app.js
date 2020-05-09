@@ -19,3 +19,5 @@ search.clear();
 const swiper = new Swiper(query);
 swiper.right();
 swiper.left();
+swiper.swipe();
+swiper.swipeMouse();
