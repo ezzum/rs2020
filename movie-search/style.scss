@@ -117,7 +117,7 @@ body {
                     justify-content: space-evenly;
                     align-items: center;
                     opacity: 1;
-                    transition: 1s;
+                    transition: 0.5s;
 
                     .title {
                         text-decoration: none;
@@ -137,6 +137,10 @@ body {
 
                     &.hide {
                         opacity: 0;
+                    }
+                    &.move {
+                        transition: none;
+                        pointer-events: none;
                     }
                 }
                 
@@ -168,6 +172,9 @@ body {
                     &:hover {
                         transform: scale(1.2);
                     }
+                }
+                &.inactive {
+                    pointer-events: none;
                 }
             }
         }

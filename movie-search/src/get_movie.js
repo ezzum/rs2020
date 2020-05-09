@@ -19,12 +19,14 @@ class GetMovie {
       .then((res) => res.json())
       .then((data) => {
         if (data.Response === 'True') {
-          loader.classList.remove('hide');
           if (from === 'search') {
+            loader.classList.remove('hide');
             document.querySelectorAll('.swiper-slide').forEach((el) => {
               el.remove();
             });
           }
+
+          document.querySelector('.control').classList.add('inactive');
 
           for (let i = 0; i < data.Search.length; i += 1) {
             this.createElement('div', `swiper-slide page${page} hide`, '', '', 'swiper-wrapper');
@@ -49,6 +51,7 @@ class GetMovie {
         noteErr.innerHTML = '';
       })
       .finally(() => {
+        document.querySelector('.control').classList.remove('inactive');
         setTimeout(() => {
           loader.classList.add('hide');
           document.querySelectorAll('.swiper-slide').forEach((elem) => {
