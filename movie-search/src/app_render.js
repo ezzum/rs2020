@@ -22,7 +22,10 @@ class AppRender {
     this.createElement('div', this.mainBlock, '', '', `.${this.appCont}`);
     this.form();
     this.createElement('div', 'note', '', '', `.${this.mainBlock}`);
-    this.createElement('div', 'slider', '', '', `.${this.mainBlock}`);
+    this.createElement('div', 'swiper-wrapper query', '', '', `.${this.mainBlock}`);
+    this.createElement('div', 'control', '', '', `.${this.mainBlock}`);
+    this.createElement('div', 'left', '', '', '.control');
+    this.createElement('div', 'right', '', '', '.control');
     this.createElement('div', 'note-error', '', '', `.${this.mainBlock}`);
     this.createElement('div', this.footerBlock, '', '', `.${this.appCont}`);
     this.createElement('div', 'loader', '', '', `.${this.appCont}`);
@@ -50,7 +53,6 @@ class AppRender {
     this.createElement('div', 'clear', '', '', '.inp-cont');
     this.createElement('div', 'keyboard', '', '', '.inp-cont');
     document.querySelector('.form').append(submit);
-
   }
 }
 

@@ -11,7 +11,7 @@ module.exports = (env, options) => {
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? '' : 'source-map',
         watch: !isProduction,
-        entry: ['./src/app.js', './style.scss'],
+        entry: ['./src/app.js', './src/swiper.js', './style.scss'],
         output: {
             path: path.join(__dirname,'./dist'),
             filename: 'script.js',

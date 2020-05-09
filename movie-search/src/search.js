@@ -10,7 +10,7 @@ class Search {
     document.querySelector('.submit').addEventListener(this.click, () => {
       this.query = document.querySelector('.input').value;
 
-      const getMovie = new GetMovie(this.query);
+      const getMovie = new GetMovie(this.query, 1, 'search');
       getMovie.translate();
     });
   }
