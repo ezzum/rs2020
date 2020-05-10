@@ -11,7 +11,7 @@ class Swiper {
     this.posLastSlide = '';
     this.lastSlideVisible = false;
     this.widthSlide = 300;
-    this.offset = 500;
+    this.offset = 1000;
   }
 
   constants() {

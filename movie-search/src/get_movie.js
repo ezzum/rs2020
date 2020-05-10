@@ -18,6 +18,7 @@ class GetMovie {
     return fetch(url)
       .then((res) => res.json())
       .then((data) => {
+        document.querySelector('.control').classList.add('inactive');
         if (data.Response === 'True') {
           if (from === 'search') {
             loader.classList.remove('hide');
@@ -25,8 +26,6 @@ class GetMovie {
               el.remove();
             });
           }
-
-          document.querySelector('.control').classList.add('inactive');
 
           for (let i = 0; i < data.Search.length; i += 1) {
             this.createElement('div', `swiper-slide page${page} hide`, '', '', 'swiper-wrapper');
