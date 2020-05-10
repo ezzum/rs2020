@@ -9,10 +9,11 @@ class AppRender {
 
   createElement(tag, className, inner, src, selector = this.target, index = 0) {
     const elem = document.createElement(tag);
-    elem.className = className;
+    if (className) elem.className = className;
     if (inner) elem.innerHTML = inner;
     if (src) elem.src = src;
     document.querySelectorAll(selector)[index].append(elem);
+    return elem;
   }
 
   app() {
@@ -53,6 +54,7 @@ class AppRender {
     this.createElement('div', 'clear', '', '', '.inp-cont');
     this.createElement('div', 'keyboard', '', '', '.inp-cont');
     document.querySelector('.form').append(submit);
+    return form;
   }
 }
 

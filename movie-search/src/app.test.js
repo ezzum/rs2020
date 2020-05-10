@@ -1,7 +1,12 @@
-import GetMovie from './get_movie';
+import AppRender from './app_render';
 
-const getMovie = new GetMovie('red', 1, 'a48b3198');
+const appRender = new AppRender('body', 'app-container', 'header', 'swiper-container', 'footer');
+appRender.app();
 
-test('red', () => {
-  expect(getMovie.movie('red', 1, 'search')).toBe();
+test('Object is defined', () => {
+  expect(appRender.createElement('div', 'slide', '', '', 'body')).toBeDefined();
+});
+
+test('Object is defined', () => {
+  expect(appRender.form()).toBeDefined();
 });
