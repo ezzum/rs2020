@@ -18,7 +18,6 @@ class GetMovie {
     return fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        document.querySelector('.control').classList.add('inactive');
         if (data.Response === 'True') {
           if (from === 'search') {
             loader.classList.remove('hide');

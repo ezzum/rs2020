@@ -12,6 +12,7 @@ class Swiper {
     this.lastSlideVisible = false;
     this.widthSlide = 300;
     this.offset = 1000;
+    this.containerWidth = document.querySelector('.swiper-container').clientWidth;
   }
 
   constants() {
@@ -114,12 +115,12 @@ class Swiper {
   }
 
   checkPosLastSlide() {
-    const containerWidth = document.querySelector('.swiper-container').clientWidth;
     const query = document.querySelector('.swiper-wrapper').classList[1].replace(/-/g, ' ');
     const page = parseInt(document.querySelector('.swiper-wrapper').id, 10) + 1;
 
-    if (containerWidth + this.offset > this.posLastSlide && this.lastSlideVisible === false) {
+    if (this.containerWidth + this.offset > this.posLastSlide && this.lastSlideVisible === false) {
       this.lastSlideVisible = true;
+      document.querySelector('.control').classList.add('inactive');
       const getMovie = new GetMovie(query, page);
       getMovie.translate();
       this.lastSlideVisible = false;

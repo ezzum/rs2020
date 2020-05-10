@@ -122,6 +122,10 @@ body {
                     opacity: 1;
 
                     .title {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 90%;
                         text-decoration: none;
                         color: #000000;
                         font-size: 18px;
