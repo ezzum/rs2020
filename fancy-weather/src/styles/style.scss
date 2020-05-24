@@ -1,0 +1,149 @@
+@import url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);
+
+$color: #36363660;
+$color-button: #f5deb3;
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.app {
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    max-width: 1440px;
+    // background-color: #437699;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-evenly;
+
+    .app-control {
+        width: 90%;
+        // background-color: $color;
+        margin: 20px auto 0;
+        border-radius: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 1;
+
+        .control-left {
+            display: flex;
+            width: 55%;
+            justify-content: start;
+
+            .change-lang {
+                width: 120px;
+                height: 40px;
+                background-color: $color;
+                color: #fff;
+                border-radius: 5px;
+                margin-right: 10px;
+                font-size: 22px;
+                cursor: pointer;
+                transition: 0.2s;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            .change-image {
+                .icon-change {
+                    width: 100%;
+                }
+            }
+
+            .change-image,
+            .change-units {
+                width: 40px;
+                height: 40px;
+                background-color: $color;
+                border-radius: 5px;
+                margin-right: 10px;
+                font-size: 22px;
+                text-align: center;
+                line-height: 40px;
+                transition: 0.2s;
+                cursor: pointer;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+        
+        .search {
+            width: 42%;
+            height: 40px;
+            background-color: $color;
+            border-radius: 5px;
+        }
+    }
+
+    .app-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 90%;
+        margin: 10px auto;
+
+        .app-weather {
+            margin: 10px auto 10px 0;
+            width: 55%;
+            height: 700px;
+            background-color: $color;
+            border-radius: 10px;
+        }
+        
+        .app-map {
+            margin: 10px 0 10px auto;
+            width: 42%;
+            height: 700px;
+            background-color: $color;
+            border-radius: 10px;
+        }
+    }
+}
+
+@media screen and (max-width: 1040px) {
+    .app {
+        .app-control {
+            .control-left {
+                width: 100%;
+            }
+            .search {
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+        .app-container {
+            flex-direction: column;
+
+            .app-weather {
+                width: 100%;
+            }
+
+            .app-map {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.spin {
+    animation: 1s spin infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
