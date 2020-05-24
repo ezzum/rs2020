@@ -14,7 +14,12 @@ export default class Background {
       .then((data) => {
         sessionStorage.setItem('image', `${data.urls.raw}&h=${heightImg}`);
 
-        document.querySelector('body').dispatchEvent(event);
+        document.querySelector('.app').dispatchEvent(event);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          document.querySelector('.icon-change').classList.remove('spin');
+        }, 1000);
       });
   }
 }

@@ -53,8 +53,8 @@ export default class Weather {
         };
         sessionStorage.setItem('weatherFurther', JSON.stringify(weatherFurther));
 
-        // const background = new Background();
-        // background.getImage();
+        const background = new Background();
+        background.getImage();
       });
   }
 }
