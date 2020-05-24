@@ -8,6 +8,8 @@ export default class Geo {
 
   getGeo() {
     const url = `https://ipinfo.io/json?token=${this.key}`;
+    const event = new Event('loadGeo');
+
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -20,6 +22,7 @@ export default class Geo {
         };
 
         sessionStorage.setItem('geo', JSON.stringify(geo));
+        document.querySelector('.app').dispatchEvent(event);
 
         const weather = new Weather();
         weather.getWeatherNow();

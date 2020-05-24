@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);
 
-$color: #36363660;
+$color: #36363691;
 $color-button: #f5deb3;
 
 * {
@@ -80,8 +80,26 @@ $color-button: #f5deb3;
         .search {
             width: 42%;
             height: 40px;
-            background-color: $color;
+            // background-color: $color;
             border-radius: 5px;
+            display: flex;
+            .input {
+                color: #fff;
+                flex-grow: 1;
+                background-color: $color;
+                border-radius: 5px;
+                padding-left: 10px;
+                &::placeholder {
+                    color: #fff;
+                }
+            }
+            .submit {
+                width: 100px;
+                border-radius: 5px;
+                background-color: #363636b6;
+                margin-left: 5px;
+                color: #fff;
+            }
         }
     }
 
@@ -98,6 +116,12 @@ $color-button: #f5deb3;
             height: 700px;
             background-color: $color;
             border-radius: 10px;
+            font-size: 40px;
+            .geo,
+            .calendar,
+            .time {
+                margin: 0 0 10px 20px;
+            }
         }
         
         .app-map {
@@ -126,6 +150,7 @@ $color-button: #f5deb3;
 
             .app-weather {
                 width: 100%;
+                font-size: 30px;
             }
 
             .app-map {

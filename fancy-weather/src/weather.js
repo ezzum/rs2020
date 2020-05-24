@@ -18,7 +18,7 @@ export default class Weather {
           feels_like: data.feels_like.value,
           humidity: data.humidity.value,
           temp: data.temp.value,
-          code: data.weather_code.value.replace(/_/g, '-'),
+          code: data.weather_code.value.replace(/_/g, ','),
           wind: data.wind_speed.value,
         };
         sessionStorage.setItem('weatherNow', JSON.stringify(weatherNow));
@@ -29,6 +29,7 @@ export default class Weather {
 
   getWeatherFurther(lat, long, units) {
     const url = `https://api.climacell.co/v3/weather/forecast/daily?lat=${lat}&lon=${long}&unit_system=${units}&start_time=now&fields=temp%2Cweather_code&apikey=${this.key}`;
+    const event = new Event('loadWeather');
 
     fetch(url)
       .then((response) => response.json())
@@ -52,9 +53,10 @@ export default class Weather {
           },
         };
         sessionStorage.setItem('weatherFurther', JSON.stringify(weatherFurther));
+        document.querySelector('.app').dispatchEvent(event);
 
-        const background = new Background();
-        background.getImage();
+        // const background = new Background();
+        // background.getImage();
       });
   }
 }

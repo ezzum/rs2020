@@ -6,8 +6,8 @@ export default class Background {
   getImage() {
     const weatherCode = JSON.parse(sessionStorage.getItem('weatherNow')).code;
     const heightImg = window.innerHeight;
-    const url = `https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query=weather-${weatherCode}&client_id=${this.key}`;
-    const event = new Event('load');
+    const url = `https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query=${weatherCode}&client_id=${this.key}`;
+    const event = new Event('loadImg');
 
     fetch(url)
       .then((response) => response.json())
