@@ -113,14 +113,54 @@ $color-button: #f5deb3;
         .app-weather {
             margin: 10px auto 10px 0;
             width: 55%;
-            height: 700px;
             background-color: $color;
             border-radius: 10px;
             font-size: 40px;
-            .geo,
-            .calendar,
-            .time {
-                margin: 0 0 10px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            .geo-container {
+                margin: 20px 20px ;
+                .geo,
+                .calendar,
+                .time {
+                    margin: 0 0 10px 20px;
+                }
+            }
+            .weat-now {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                font-size: 30px;
+                margin-bottom: 20px;
+                .temp-now {
+                    font-size: 130px;
+                    margin: 20px 20px;
+                }
+                .descrip-now {
+                    font-size: 25px;
+                    margin: 20px 20px;
+                }
+            }
+            .weather-days {
+                font-size: 25px;
+                display: flex;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
+                margin-bottom: 30px;
+                .day {
+                    width: 130px;
+                    margin: 20px 20px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    .temp-icon-days {
+                        width: 100%;
+                        margin-top: 10px;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
             }
         }
         

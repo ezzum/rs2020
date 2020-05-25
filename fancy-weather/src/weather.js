@@ -18,7 +18,7 @@ export default class Weather {
           feels_like: data.feels_like.value,
           humidity: data.humidity.value,
           temp: data.temp.value,
-          code: data.weather_code.value.replace(/_/g, ','),
+          code: data.weather_code.value,
           wind: data.wind_speed.value,
         };
         sessionStorage.setItem('weatherNow', JSON.stringify(weatherNow));
@@ -34,22 +34,19 @@ export default class Weather {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        data.length = 4;
+        data.length = 3;
         const weatherFurther = {
+          0: {
+            temp: Math.round((data[0].temp[0].min.value + data[0].temp[1].max.value) / 2),
+            weatherCode: data[0].weather_code.value,
+          },
           1: {
-            tempMin: Math.round(data[1].temp[0].min.value),
-            tempMax: Math.round(data[1].temp[1].max.value),
+            temp: Math.round((data[1].temp[0].min.value + data[1].temp[1].max.value) / 2),
             weatherCode: data[1].weather_code.value,
           },
           2: {
-            tempMin: Math.round(data[2].temp[0].min.value),
-            tempMax: Math.round(data[2].temp[1].max.value),
+            temp: Math.round((data[2].temp[0].min.value + data[2].temp[1].max.value) / 2),
             weatherCode: data[2].weather_code.value,
-          },
-          3: {
-            tempMin: Math.round(data[3].temp[0].min.value),
-            tempMax: Math.round(data[3].temp[1].max.value),
-            weatherCode: data[3].weather_code.value,
           },
         };
         sessionStorage.setItem('weatherFurther', JSON.stringify(weatherFurther));
