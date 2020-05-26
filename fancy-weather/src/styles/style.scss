@@ -170,6 +170,13 @@ $color-button: #f5deb3;
             height: 700px;
             background-color: $color;
             border-radius: 10px;
+
+            .map {
+                margin: 20px auto;
+                width: 90%;
+                height: 70%;
+                border-radius: 10px;
+            }
         }
     }
 }

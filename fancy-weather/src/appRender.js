@@ -5,7 +5,7 @@ export default class AppRender {
     this.className = className;
   }
 
-  createElement(tag, className, innerHTML, target = `.${this.className}`, action, type, placeholder, value) {
+  createElement(tag, className, innerHTML, target = `.${this.className}`, action, type, placeholder, value, id) {
     const elem = document.createElement(tag);
     elem.className = className;
     elem.innerHTML = innerHTML;
@@ -13,6 +13,7 @@ export default class AppRender {
     if (type) elem.type = type;
     if (placeholder) elem.placeholder = placeholder;
     if (value) elem.value = value;
+    if (id) elem.id = id;
     document.querySelector(target).append(elem);
   }
 
@@ -55,22 +56,13 @@ export default class AppRender {
     this.createElement('div', 'day', '', '.weather-days');
     this.createElement('div', 'day', '', '.weather-days');
     this.createElement('div', 'day', '', '.weather-days');
+
+    this.createElement('div', 'map', '', `.${this.className}-map`, null, null, null, null, 'map');
   }
 
   content() {
-    const geo = document.querySelector('.geo');
-    const stackGeo = JSON.parse(sessionStorage.geo);
     const calendar = document.querySelector('.calendar');
     const date = new Date();
-    const tempNow = document.querySelector('.temp-now');
-    const code = document.querySelector('.code-now');
-    const feels = document.querySelector('.feels-like-now');
-    const wind = document.querySelector('.wind-now');
-    const humid = document.querySelector('.humidity-now');
-    const days = document.querySelectorAll('.day');
-
-    const stackWeatNow = JSON.parse(sessionStorage.weatherNow);
-    const stackWeatDays = JSON.parse(sessionStorage.weatherFurther);
 
     setInterval(() => {
       const clock = new Date();
@@ -78,11 +70,22 @@ export default class AppRender {
     }, 1000);
 
     document.querySelector(`.${this.className}`).addEventListener('loadGeo', () => {
+      const geo = document.querySelector('.geo');
+      const stackGeo = JSON.parse(sessionStorage.geo);
       geo.innerHTML = `${stackGeo.city}, ${stackGeo.count}`;
       calendar.innerHTML = `${monthsDay.days[date.getDay()]} ${date.getDate()} ${monthsDay.months[date.getMonth()]}`;
     });
 
     document.querySelector(`.${this.className}`).addEventListener('loadWeather', () => {
+      const tempNow = document.querySelector('.temp-now');
+      const code = document.querySelector('.code-now');
+      const feels = document.querySelector('.feels-like-now');
+      const wind = document.querySelector('.wind-now');
+      const humid = document.querySelector('.humidity-now');
+      const days = document.querySelectorAll('.day');
+
+      const stackWeatNow = JSON.parse(sessionStorage.weatherNow);
+      const stackWeatDays = JSON.parse(sessionStorage.weatherFurther);
       tempNow.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `${stackWeatNow.temp}&deg;` : `+${stackWeatNow.temp}&deg;`;
       code.innerHTML = `${stackWeatNow.code[0].toUpperCase()}${stackWeatNow.code.replace(/_/g, ' ').slice(1)}`;
       feels.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `Feels like: ${stackWeatNow.temp}&deg;` : `Feels like: +${stackWeatNow.temp}&deg;`;
