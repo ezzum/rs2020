@@ -5,7 +5,7 @@ export default class AppRender {
     this.className = className;
   }
 
-  createElement(tag, className, innerHTML, target = `.${this.className}`, action, type, placeholder, value, id) {
+  createElement(tag, className, innerHTML, target = `.${this.className}`, action, type, placeholder, value, id, src) {
     const elem = document.createElement(tag);
     elem.className = className;
     elem.innerHTML = innerHTML;
@@ -14,6 +14,7 @@ export default class AppRender {
     if (placeholder) elem.placeholder = placeholder;
     if (value) elem.value = value;
     if (id) elem.id = id;
+    if (src) elem.src = src;
     document.querySelector(target).append(elem);
   }
 
@@ -25,7 +26,8 @@ export default class AppRender {
     this.createElement('div', `${this.className}-map`, '', `.${this.className}-container`);
 
     this.createElement('div', 'control-left', '', `.${this.className}-control`);
-    this.createElement('div', 'change-image', '<img class=\'icon-change spin\' src=../src/img/change.png>', '.control-left');
+    this.createElement('div', 'change-image', '', '.control-left');
+    this.createElement('div', 'icon-change spin', '', '.change-image');
 
     this.createElement('select', 'change-lang', '', '.control-left');
     this.createElement('option', 'en', 'English', '.change-lang');
