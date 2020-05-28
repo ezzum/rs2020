@@ -104,12 +104,16 @@ export default class AppRender {
       tempNow.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `${stackWeatNow.temp}&deg;` : `+${stackWeatNow.temp}&deg;`;
       code.innerHTML = `${stackWeatNow.code[0].toUpperCase()}${stackWeatNow.code.replace(/_/g, ' ').slice(1)}`;
       feels.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `Feels like: ${stackWeatNow.temp}&deg;` : `Feels like: +${stackWeatNow.temp}&deg;`;
-      wind.innerHTML = `Wind: ${stackWeatNow.wind} m/s`;
+      wind.innerHTML = `Wind: ${stackWeatNow.wind}`;
       humid.innerHTML = `Humidity: ${stackWeatNow.humidity}%`;
 
       days.forEach((el, indx) => {
         const temp = `${stackWeatDays[indx].temp}`.includes('-') ? `${stackWeatDays[indx].temp}` : `+${stackWeatDays[indx].temp}`;
-        el.innerHTML = `<div class=name-day>${monthsDay.daysFull[this.date.getDay() + indx]}</div>
+        const calcDay = this.date.getDay() + indx;
+        const lengthWeek = Object.keys(monthsDay.daysFull).length;
+        const dayIndx = calcDay >= lengthWeek ? calcDay - lengthWeek : calcDay;
+
+        el.innerHTML = `<div class=name-day>${monthsDay.daysFull[dayIndx]}</div>
                         <div class=temp-icon-days>
                           <div class=temp-days>${temp}&deg;</div>
                           <div class=icon-days></div>

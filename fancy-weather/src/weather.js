@@ -5,7 +5,7 @@ export default class Weather {
     this.key = 'MvuDljdJQHHWy9rTnFQbx3XDECDK7j1w';
   }
 
-  getWeatherNow() {
+  getWeatherNow(from) {
     const { lat } = JSON.parse(sessionStorage.getItem('geo'));
     const { long } = JSON.parse(sessionStorage.getItem('geo'));
     const units = localStorage.getItem('units');
@@ -17,17 +17,17 @@ export default class Weather {
         const weatherNow = {
           feels_like: data.feels_like.value,
           humidity: data.humidity.value,
-          temp: data.temp.value,
+          temp: Math.round(data.temp.value),
           code: data.weather_code.value,
-          wind: data.wind_speed.value,
+          wind: `${data.wind_speed.value} ${data.wind_speed.units}`,
         };
         sessionStorage.setItem('weatherNow', JSON.stringify(weatherNow));
 
-        this.getWeatherFurther(lat, long, units);
+        this.getWeatherFurther(lat, long, units, from);
       });
   }
 
-  getWeatherFurther(lat, long, units) {
+  getWeatherFurther(lat, long, units, from) {
     const url = `https://api.climacell.co/v3/weather/forecast/daily?lat=${lat}&lon=${long}&unit_system=${units}&start_time=now&fields=temp%2Cweather_code&apikey=${this.key}`;
     const event = new Event('loadWeather');
 
@@ -52,8 +52,10 @@ export default class Weather {
         sessionStorage.setItem('weatherFurther', JSON.stringify(weatherFurther));
         document.querySelector('.app').dispatchEvent(event);
 
-        // const background = new Background();
-        // background.getImage();
+        if (from === 'geoo') {
+          const background = new Background();
+          background.getImage();
+        }
       });
   }
 }

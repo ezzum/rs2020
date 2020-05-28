@@ -25,7 +25,7 @@ export default class Geo {
         document.querySelector('.app').dispatchEvent(event);
 
         const weather = new Weather();
-        weather.getWeatherNow();
+        weather.getWeatherNow('geo');
       });
   }
 }
