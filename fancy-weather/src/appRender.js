@@ -58,6 +58,9 @@ export default class AppRender {
     this.createElement('div', 'day', '', '.weather-days');
 
     this.createElement('div', 'map', '', `.${this.className}-map`, null, null, null, null, 'map');
+    this.createElement('div', 'lat-long', '', '.app-map');
+    this.createElement('div', 'lat', '', '.lat-long');
+    this.createElement('div', 'long', '', '.lat-long');
   }
 
   content() {
@@ -72,8 +75,15 @@ export default class AppRender {
     document.querySelector(`.${this.className}`).addEventListener('loadGeo', () => {
       const geo = document.querySelector('.geo');
       const stackGeo = JSON.parse(sessionStorage.geo);
+      const { lat } = JSON.parse(sessionStorage.getItem('geo'));
+      const { long } = JSON.parse(sessionStorage.getItem('geo'));
+      const latStr = document.querySelector('.lat');
+      const longStr = document.querySelector('.long');
+
       geo.innerHTML = `${stackGeo.city}, ${stackGeo.count}`;
       calendar.innerHTML = `${monthsDay.days[date.getDay()]} ${date.getDate()} ${monthsDay.months[date.getMonth()]}`;
+      latStr.innerHTML = `Latitude: ${lat.split('.')[0]}&deg;${lat.split('.')[1].slice(0, 2)}'`;
+      longStr.innerHTML = `Longitude: ${long.split('.')[0]}&deg;${long.split('.')[1].slice(0, 2)}'`;
     });
 
     document.querySelector(`.${this.className}`).addEventListener('loadWeather', () => {
