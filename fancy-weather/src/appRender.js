@@ -3,6 +3,7 @@ import monthsDay from './date';
 export default class AppRender {
   constructor(className) {
     this.className = className;
+    this.date = new Date();
   }
 
   createElement(tag, className, innerHTML, target = `.${this.className}`, action, type, placeholder, value, id, src) {
@@ -48,7 +49,7 @@ export default class AppRender {
     this.createElement('div', 'weat-now', '', '.app-weather');
     this.createElement('div', 'temp-now', 'temp', '.weat-now');
     this.createElement('div', 'descrip-now', '', '.weat-now');
-    this.createElement('div', 'icon-now', 'icon', '.descrip-now');
+    this.createElement('div', 'icon-now', '', '.descrip-now');
     this.createElement('div', 'code-now', 'code', '.descrip-now');
     this.createElement('div', 'feels-like-now', 'feels', '.descrip-now');
     this.createElement('div', 'wind-now', 'wind', '.descrip-now');
@@ -67,11 +68,11 @@ export default class AppRender {
 
   content() {
     const calendar = document.querySelector('.calendar');
-    const date = new Date();
 
     setInterval(() => {
       const clock = new Date();
-      document.querySelector('.time').innerHTML = `${`0${clock.getHours()}`.slice(-2)}:${`0${clock.getMinutes()}`.slice(-2)}:${`0${clock.getSeconds()}`.slice(-2)}`;
+      const time = document.querySelector('.time');
+      time.innerHTML = `${`0${clock.getHours()}`.slice(-2)}:${`0${clock.getMinutes()}`.slice(-2)}:${`0${clock.getSeconds()}`.slice(-2)}`;
     }, 1000);
 
     document.querySelector(`.${this.className}`).addEventListener('loadGeo', () => {
@@ -83,7 +84,7 @@ export default class AppRender {
       const longStr = document.querySelector('.long');
 
       geo.innerHTML = `${stackGeo.city}, ${stackGeo.count}`;
-      calendar.innerHTML = `${monthsDay.days[date.getDay()]} ${date.getDate()} ${monthsDay.months[date.getMonth()]}`;
+      calendar.innerHTML = `${monthsDay.days[this.date.getDay()]} ${this.date.getDate()} ${monthsDay.months[this.date.getMonth()]}`;
       latStr.innerHTML = `Latitude: ${lat.split('.')[0]}&deg;${lat.split('.')[1].slice(0, 2)}'`;
       longStr.innerHTML = `Longitude: ${long.split('.')[0]}&deg;${long.split('.')[1].slice(0, 2)}'`;
     });
@@ -95,26 +96,49 @@ export default class AppRender {
       const wind = document.querySelector('.wind-now');
       const humid = document.querySelector('.humidity-now');
       const days = document.querySelectorAll('.day');
+      const iconNow = document.querySelector('.icon-now');
 
       const stackWeatNow = JSON.parse(sessionStorage.weatherNow);
       const stackWeatDays = JSON.parse(sessionStorage.weatherFurther);
+
       tempNow.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `${stackWeatNow.temp}&deg;` : `+${stackWeatNow.temp}&deg;`;
       code.innerHTML = `${stackWeatNow.code[0].toUpperCase()}${stackWeatNow.code.replace(/_/g, ' ').slice(1)}`;
       feels.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `Feels like: ${stackWeatNow.temp}&deg;` : `Feels like: +${stackWeatNow.temp}&deg;`;
       wind.innerHTML = `Wind: ${stackWeatNow.wind} m/s`;
       humid.innerHTML = `Humidity: ${stackWeatNow.humidity}%`;
+
       days.forEach((el, indx) => {
         const temp = `${stackWeatDays[indx].temp}`.includes('-') ? `${stackWeatDays[indx].temp}` : `+${stackWeatDays[indx].temp}`;
-        el.innerHTML = `<div class=name-day>${monthsDay.daysFull[date.getDay() + indx]}</div>
+        el.innerHTML = `<div class=name-day>${monthsDay.daysFull[this.date.getDay() + indx]}</div>
                         <div class=temp-icon-days>
                           <div class=temp-days>${temp}&deg;</div>
-                          <div class=icon-days>icon</div>
+                          <div class=icon-days></div>
                         </div>`;
       });
+
+      this.icons(iconNow, stackWeatNow, stackWeatDays);
     });
 
     document.querySelector(`.${this.className}`).addEventListener('loadImg', () => {
       document.querySelector(`.${this.className}`).style.backgroundImage = `url(${sessionStorage.image})`;
+    });
+  }
+
+  icons(iconNow, stackWeatNow, stackWeatDays) {
+    const iconDays = document.querySelectorAll('.icon-days');
+
+    if (stackWeatNow.code === 'clear' || stackWeatNow.code === 'mostly_clear' || stackWeatNow.code === 'partly_cloudy') {
+      if (this.date.getHours() > 6 && this.date.getHours() < 20) {
+        iconNow.style.backgroundImage = `url(./weather_icon/${stackWeatNow.code}_day.svg)`;
+      } else {
+        iconNow.style.backgroundImage = `url(./weather_icon/${stackWeatNow.code}_night.svg)`;
+      }
+    } else {
+      iconNow.style.backgroundImage = `url(./weather_icon/${stackWeatNow.code}.svg)`;
+    }
+
+    iconDays.forEach((el, indx) => {
+      el.style.backgroundImage = `url(./weather_icon/${stackWeatDays[indx].weatherCode}.svg)`;
     });
   }
 }

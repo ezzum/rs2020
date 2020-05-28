@@ -52,8 +52,8 @@ export default class Weather {
         sessionStorage.setItem('weatherFurther', JSON.stringify(weatherFurther));
         document.querySelector('.app').dispatchEvent(event);
 
-        const background = new Background();
-        background.getImage();
+        // const background = new Background();
+        // background.getImage();
       });
   }
 }
