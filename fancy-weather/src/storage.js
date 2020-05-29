@@ -4,7 +4,10 @@ export default class Storage {
   }
 
   setStorage() {
-    this.stack.setItem('lang', 'en');
+    if (!this.stack.lang) {
+      this.stack.setItem('lang', 'en');
+    }
+
     if (!this.stack.units) {
       this.stack.setItem('units', 'si');
     }

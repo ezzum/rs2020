@@ -17,6 +17,8 @@ geo.getGeo();
 const action = new Action();
 action.changeImage();
 action.units();
+action.changeLang();
+action.submit();
 
 const map = new Map();
 map.getMap();

@@ -26,6 +26,9 @@ export default class Geo {
 
         const weather = new Weather();
         weather.getWeatherNow('geo');
+      })
+      .catch((err) => {
+        document.querySelector('.app-error').innerHTML = `Geolocation: '${err}'`;
       });
   }
 }

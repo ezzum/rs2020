@@ -101,7 +101,20 @@ $color-button: #f5deb3;
             background-color: #363636b6;
             margin-left: 5px;
             color: #fff;
+            transition: 0.2s;
+            &:hover {
+                transform: scale(1.1);
+            }
         }
+    }
+
+    .app-error {
+        width: 90%;
+        margin: 10px auto 0;
+        background-color: #36363691;
+        border-radius: 10px;
+        text-align: center;
+        line-height: 30px;
     }
 
     .app-container {
@@ -217,6 +230,7 @@ $color-button: #f5deb3;
 
             .app-map {
                 width: 100%;
+                height: 700px;
             }
         }
     }

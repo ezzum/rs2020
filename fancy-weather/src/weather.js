@@ -24,6 +24,9 @@ export default class Weather {
         sessionStorage.setItem('weatherNow', JSON.stringify(weatherNow));
 
         this.getWeatherFurther(lat, long, units, from);
+      })
+      .catch((err) => {
+        document.querySelector('.app-error').innerHTML = `Weater now: '${err}'`;
       });
   }
 
@@ -52,10 +55,13 @@ export default class Weather {
         sessionStorage.setItem('weatherFurther', JSON.stringify(weatherFurther));
         document.querySelector('.app').dispatchEvent(event);
 
-        if (from === 'geoo') {
+        if (from === 'geo') {
           const background = new Background();
           background.getImage();
         }
+      })
+      .catch((err) => {
+        document.querySelector('.app-error').innerHTML = `Weather days: '${err}'`;
       });
   }
 }

@@ -20,6 +20,9 @@ export default class Background {
         setTimeout(() => {
           document.querySelector('.icon-change').classList.remove('spin');
         }, 1000);
+      })
+      .catch((err) => {
+        document.querySelector('.app-error').innerHTML = `Background: '${err}'`;
       });
   }
 }
