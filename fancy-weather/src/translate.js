@@ -9,13 +9,14 @@ export default class Translate {
       arrQuery.push(el.innerText);
     });
 
-    const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${this.key}&text=${arrQuery.join('@')}&lang=en-${localStorage.lang}`;
+    const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${this.key}&text=${arrQuery.join('@-@')}&lang=en-${localStorage.lang}`;
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         document.querySelectorAll('.transl').forEach((el, indx) => {
-          el.innerText = `${data.text[0].split('@')[indx][0].toUpperCase()}${data.text[0].split('@')[indx].slice(1)}`;
+          el.innerText = `${data.text[0].split('@-@')[indx][0].toUpperCase()}${data.text[0].split('@-@')[indx].slice(1)}`;
         });
       })
       .catch((err) => {

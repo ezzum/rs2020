@@ -70,14 +70,17 @@ export default class AppRender {
   }
 
   content() {
-    setInterval(() => {
-      const clock = new Date();
-      const time = document.querySelector('.time');
-      time.innerHTML = `${`0${clock.getHours()}`.slice(-2)}:${`0${clock.getMinutes()}`.slice(-2)}:${`0${clock.getSeconds()}`.slice(-2)}`;
-    }, 1000);
-
     document.querySelector(`.${this.className}`).addEventListener('loadGeo', () => {
       this.loadGeo();
+      setInterval(() => {
+        const time = document.querySelector('.time');
+
+        const clock = new Date();
+        const offsetLocal = clock.getTimezoneOffset() * 60000;
+        const offsetTime = JSON.parse(sessionStorage.geo).offset + offsetLocal;
+        const newDate = new Date(clock.getTime() + offsetTime);
+        time.innerHTML = `${newDate.toTimeString()}`.replace(/ GMT.+/, '');
+      }, 1000);
     });
 
     document.querySelector(`.${this.className}`).addEventListener('loadWeather', () => {
@@ -93,6 +96,10 @@ export default class AppRender {
 
   icons(iconNow, stackWeatNow, stackWeatDays) {
     const iconDays = document.querySelectorAll('.icon-days');
+
+    const offsetLocal = this.date.getTimezoneOffset() * 60000;
+    const offsetTime = JSON.parse(sessionStorage.geo).offset + offsetLocal;
+    const newDate = new Date(this.date.getTime() + offsetTime);
 
     if (stackWeatNow.code === 'clear' || stackWeatNow.code === 'mostly_clear' || stackWeatNow.code === 'partly_cloudy') {
       if (this.date.getHours() > 6 && this.date.getHours() < 20) {
@@ -123,7 +130,7 @@ export default class AppRender {
 
     tempNow.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `${stackWeatNow.temp}&deg;` : `+${stackWeatNow.temp}&deg;`;
     code.innerHTML = `${stackWeatNow.code[0].toUpperCase()}${stackWeatNow.code.replace(/_/g, ' ').slice(1)}`;
-    feels.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `Feels like: ${stackWeatNow.temp}&deg;` : `Feels like: +${stackWeatNow.temp}&deg;`;
+    feels.innerHTML = `${stackWeatNow.temp}`.includes('-') ? `Feels like: <span>${stackWeatNow.temp}&deg;</span>` : `Feels like: <span>+${stackWeatNow.temp}&deg;</span>`;
     wind.innerHTML = `Wind: ${stackWeatNow.wind}`;
     humid.innerHTML = `Humidity: ${stackWeatNow.humidity}%`;
 
@@ -152,9 +159,13 @@ export default class AppRender {
     const latStr = document.querySelector('.lat');
     const longStr = document.querySelector('.long');
 
+    const offsetLocal = this.date.getTimezoneOffset() * 60000;
+    const offsetTime = JSON.parse(sessionStorage.geo).offset + offsetLocal;
+    const newDate = new Date(this.date.getTime() + offsetTime);
+
     geo.innerHTML = `${stackGeo.city}, ${stackGeo.count}`;
-    calendar.innerHTML = `${monthsDay.days[this.date.getDay()]} ${this.date.getDate()} ${monthsDay.months[this.date.getMonth()]}`;
-    latStr.innerHTML = `Latitude: ${lat.split('.')[0]}&deg;${lat.split('.')[1].slice(0, 2)}'`;
-    longStr.innerHTML = `Longitude: ${long.split('.')[0]}&deg;${long.split('.')[1].slice(0, 2)}'`;
+    calendar.innerHTML = `${monthsDay.days[newDate.getDay()]} ${newDate.getDate()} ${monthsDay.months[newDate.getMonth()]}`;
+    latStr.innerHTML = `Latitude: ${lat.split('.')[0]}&deg; ${lat.split('.')[1].slice(0, 2)}'`;
+    longStr.innerHTML = `Longitude: ${long.split('.')[0]}&deg; ${long.split('.')[1].slice(0, 2)}'`;
   }
 }

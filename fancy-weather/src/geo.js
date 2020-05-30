@@ -1,5 +1,4 @@
-import country from './country';
-import Weather from './weather';
+import Search from './search';
 
 export default class Geo {
   constructor() {
@@ -8,24 +7,12 @@ export default class Geo {
 
   getGeo() {
     const url = `https://ipinfo.io/json?token=${this.key}`;
-    const event = new Event('loadGeo');
+    const search = new Search();
 
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        const geo = {
-          city: data.city,
-          count: country[data.country],
-          lat: (data.loc.split(','))[0],
-          long: (data.loc.split(','))[1],
-          timezone: data.timezone,
-        };
-
-        sessionStorage.setItem('geo', JSON.stringify(geo));
-        document.querySelector('.app').dispatchEvent(event);
-
-        const weather = new Weather();
-        weather.getWeatherNow('geo');
+        search.search(data.city);
       })
       .catch((err) => {
         document.querySelector('.app-error').innerHTML = `Geolocation: '${err}'`;
